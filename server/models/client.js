@@ -21,4 +21,4 @@ var Client = mongoose.model("Client", {
   }
 });
 
-module.exports = { Todo };
+module.exports = { Client };
