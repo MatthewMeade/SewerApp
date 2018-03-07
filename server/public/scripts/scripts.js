@@ -32,4 +32,35 @@ $(document).ready(function() {
       }
     ]
   });
+
+  $.widget("ui.systemModal", {
+    open: function(id) {
+      $(this.element).modal("show");
+      $("#systemModalTitle").text("System: " + id);
+    }
+  });
+
+  $("#systemModal").modal({ show: false });
+  $("#systemModal").systemModal();
+
+  $("#systemsTable tr").click(function(e) {
+    $("#systemModal").systemModal(
+      "open",
+      e.target.parentNode.firstChild.innerText
+    );
+  });
+
+  $("#logOutButton").click(() => {
+    $.ajax({
+      url: "/users/me/token",
+      type: "DELETE"
+    })
+      .done(response => {
+        window.location.href = "/";
+      })
+      .fail(err => {
+        alert("ERROR: " + err);
+        console.error(error);
+      });
+  });
 });

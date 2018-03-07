@@ -5,17 +5,6 @@ const _ = require("lodash");
 const bcrypt = require("bcryptjs");
 
 var UserSchema = new mongoose.Schema({
-  email: {
-    required: true,
-    trim: true,
-    type: String,
-    minlength: 1,
-    unique: true,
-    validate: {
-      validator: validator.isEmail,
-      message: "Not a valid email"
-    }
-  },
   password: {
     type: String,
     required: true,
@@ -84,10 +73,10 @@ UserSchema.statics.findByToken = function(token) {
   });
 };
 
-UserSchema.statics.findByCredentials = function(email, password) {
+UserSchema.statics.findByCredentials = function(password) {
   var User = this;
 
-  return User.findOne({ email }).then(user => {
+  return User.findOne({}).then(user => {
     if (!user) {
       return Promise.reject(error);
     }

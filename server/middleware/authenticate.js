@@ -1,7 +1,7 @@
 var { User } = require("../models/user.js");
 
 var authenticate = (req, res, next) => {
-  var token = req.header("x-auth");
+  var token = req.cookies.token;
 
   User.findByToken(token)
     .then(user => {
@@ -15,7 +15,7 @@ var authenticate = (req, res, next) => {
       next();
     })
     .catch(e => {
-      res.status(401).send();
+      res.redirect("/loginPage");
     });
 };
 
