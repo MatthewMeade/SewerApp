@@ -105,7 +105,6 @@
             }).done(data => {
                 if (!data.token) throw "ERROR";
 
-                Cookies.set('token', data.token);
                 window.location.href = "/"
 
             }).fail(err => {

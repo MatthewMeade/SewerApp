@@ -83,6 +83,7 @@ app.post("/users/login", (req, res) => {
   User.findByCredentials(body.password)
     .then(user => {
       return user.generateAuthToken().then(token => {
+        res.cookie("token", token);
         res.status(200).send({ user, token });
       });
     })
@@ -100,6 +101,112 @@ app.delete("/users/me/token", authenticate, (req, res) => {
       res.status(400).send();
     }
   );
+});
+
+app.post("/clients", authenticate, (req, res) => {
+  var client = new Client({
+    _creator: req.user._id
+  });
+
+  client.save().then(
+    doc => {
+      res.send(doc);
+    },
+    e => {
+      res.status(400).send(e);
+    }
+  );
+});
+
+app.get("/clients", authenticate, (req, res) => {
+  Client.find({
+    _creator: req.user._id
+  }).then(
+    clients => {
+      res.send({ clients });
+    },
+    e => {
+      res.status(400).send(e);
+    }
+  );
+});
+
+app.get("/clients/:id", authenticate, (req, res) => {
+  var id = req.params.id;
+
+  if (!ObjectID.isValid(id)) {
+    return res.status(404).send();
+  }
+
+  Client.findOne({
+    _id: id,
+    _creator: req.user._id
+  })
+    .then(client => {
+      if (!client) {
+        return res.status(404).send();
+      }
+      res.send({ client });
+    })
+    .catch(e => {
+      res.status(400).send(e);
+    });
+});
+
+app.delete("/clients/:id", authenticate, (req, res) => {
+  var id = req.params.id;
+
+  if (!ObjectID.isValid(id)) {
+    return res.status(404).send();
+  }
+
+  Client.findOneAndRemove({
+    _id: id,
+    _creator: req.user._id
+  })
+    .then(client => {
+      if (!client) {
+        return res.status(404).send();
+      }
+      res.send({ client });
+    })
+    .catch(e => {
+      res.status(400).send(e);
+    });
+});
+
+// Todo
+app.patch("/clients/:id", authenticate, (req, res) => {
+  var id = req.params.id;
+  var body = _.pick(
+    req.body,
+    Object.keys(mongoose.model("Client").schema.obj).filter(k => k[0] !== "_")
+  );
+
+  if (!ObjectID.isValid(id)) {
+    return res.status(404).send();
+  }
+
+  Client.findOneAndUpdate(
+    {
+      _id: id,
+      _creator: req.user._id
+    },
+    {
+      $set: body
+    },
+    {
+      new: true
+    }
+  )
+    .then(client => {
+      if (!client) {
+        return res.status(400).send();
+      }
+
+      res.send({ client });
+    })
+    .catch(e => {});
 });
 
 app.listen(process.env.PORT, () =>
