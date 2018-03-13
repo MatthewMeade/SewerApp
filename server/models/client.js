@@ -4,58 +4,43 @@ const autoIncrement = require("mongoose-auto-increment");
 var Client = mongoose.model("Client", {
   firstName: {
     type: String,
-    // required: true,
-    minlength: 1,
-    trim: true
+    default: ""
   },
   lastName: {
     type: String,
-    // required: true,
-    minlength: 1,
-    trim: true
+    default: ""
   },
   title: {
     type: String,
-    minlength: 1,
-    trim: true
+    default: ""
   },
   email: {
     type: String,
-    minlength: 1,
-    trim: true
+    default: ""
   },
   homePhone: {
     type: String,
-    minlength: 1,
-    trim: true
+    default: ""
   },
   mobilePhone: {
     type: String,
-    minlength: 1,
-    trim: true
+    default: ""
   },
   streetAddress: {
     type: String,
-    minlength: 1,
-    trim: true
+    default: ""
   },
   city: {
     type: String,
-    minlength: 1,
-    trim: true
+    default: ""
   },
   province: {
     type: String,
-    minlength: 2,
-    maxlength: 2,
-    trim: true,
-    default: "NL"
+    default: ""
   },
   postCode: {
     type: String,
-    minlength: 7,
-    maxlength: 7,
-    trim: true
+    default: ""
   },
   _creator: {
     type: mongoose.Schema.Types.ObjectId,

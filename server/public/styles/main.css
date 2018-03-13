@@ -44,3 +44,26 @@ body {
   width: 70px;
   padding: 0;
 }
+
+.tab-content {
+  width: 100%;
+}
+
+.bootstrap-table .dropdown-menu {
+  width: 250px;
+}
+
+.bootstrap-table .search {
+  display: inline-block;
+  width: calc(100% - (75px * 2));
+  margin: 0;
+}
+
+.bootstrap-table .columns {
+  margin: 0 0 5px 0;
+}
+
+.bootstrap-table .columns > * {
+  display: inline-block;
+  width: 75px;
+}
