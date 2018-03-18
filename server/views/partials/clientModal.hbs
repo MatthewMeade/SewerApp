@@ -1,0 +1,94 @@
+<div class="modal fade" id="clientModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+            <div id='clientModalBody' class="modal-body container-fluid">
+
+                <div class='row clientInfo clearfix '>
+                    {{!--
+                    <h2 class='col-12'>Client Info: </h2><br /> --}}
+                </div>
+                <div class="clientFormContainer container-fluid">
+                    <form id="clientForm" class='row'>
+                        <h3>Edit Client</h3>
+                        <div class='col-lg-6'>
+                            <div class="form-group">
+                                <legend id="clientNameLegend"><i class="fas fa-id-card"></i> Client Name</legend>
+
+                                <label for="clientFirstName" class="">First Name</label>
+                                <input type="text" class="form-control " id="clientFirstName" placeholder="Eg: Matthew" name='firstName'>
+
+                                <label for="clientLastName" class="">Last Name</label>
+                                <input type="text" class="form-control " id="clientLastName" placeholder="Eg: Meade" name='lastName'>
+
+                                <label for="clientTitle" class="">Title</label>
+                                <input type="text" class="form-control " id="clientTitle" placeholder="Eg: Mr" name='title'>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <legend id="clientInfoLegend"><i class="fas fa-phone fa-xs"></i> Contact Info</i>
+                                </legend>
+
+                                <label for="clientEmail" class="">Email</label>
+                                <input type="email" class="form-control " id="clientEmail" placeholder="Eg: example@gmail.com" name='email'>
+
+
+                                <label for="clientHomePhone" class="">Home Phone</label>
+                                <input type="tel" class="form-control " id="clientHomePhone" placeholder="Eg: 709-555-1234" name='homePhone'>
+
+                                <label for="clientMobilePhone" class="">Mobile Phone</label>
+                                <input type="tel" class="form-control " id="clientMobilePhone" placeholder="Eg: 709-555-4321" name='mobilePhone'>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <legend id="clientMailLegend"><i class="fas fa-envelope"></i> Mailing Info</i>
+                                </legend>
+
+                                <label for="clientstreetAddress" class="">Street</label>
+                                <input type="text" class="form-control " id="clientstreetAddress" placeholder="Eg: 1 Main Street" name='streetAddress'>
+
+
+                                <label for="clientCity" class="">City</label>
+                                <input type="text" class="form-control " id="clientCity" placeholder="Eg: St. John's" name='city'>
+
+                                <label for="clientProvince" class="">Province</label>
+                                <input type="text" class="form-control " id="clientProvince" placeholder="Eg: NL" name='province'>
+
+                                <label for="clientPostCode" class="">Postal Code</label>
+                                <input type="text" class="form-control " id="clientPostalCode" placeholder="Eg: A1A 3R3" name='postCode'>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <legend id="clientNotesLegend"><i class="fas fa-sticky-note"></i> Notes</i>
+                                </legend>
+
+                                <textarea name="notes" id="clientNotes" placeholder="Enter other relevant client information"></textarea>
+
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <div class=" modal-footer ">
+                {{!-- <button type="button " class="btn btn-secondary closeBtn ">Close</button> --}}
+                <button type="button " class="btn btn-secondary editBtn ">Edit</button>
+
+                <button type="button " class="btn btn-primary saveBtn">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

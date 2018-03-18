@@ -63,4 +63,13 @@ $(document).ready(function() {
         console.error(error);
       });
   });
+
+  const urlTab = window.location.href
+    .split("#")[1]
+    .split("?")[0]
+    .toLowerCase();
+  $(`#${urlTab}-tab`).click();
+
+  // const urlRow = window.location.href.split("=")[1];
+  // setTimeout(() => $(`#${urlRow} td`)[1].click(), 500);
 });

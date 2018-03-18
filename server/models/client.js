@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
-const autoIncrement = require("mongoose-auto-increment");
+// const autoIncrement = require("mongoose-auto-increment");
 
-var Client = mongoose.model("Client", {
+var clientSchema = new mongoose.Schema({
   firstName: {
     type: String,
     default: ""
@@ -42,19 +42,22 @@ var Client = mongoose.model("Client", {
     type: String,
     default: ""
   },
+  notes: {
+    type: String,
+    default: ""
+  },
   _creator: {
     type: mongoose.Schema.Types.ObjectId,
     required: true
-  },
-  _index: {
-    type: Number
   }
 });
 
-Client.schema.plugin(autoIncrement.plugin, {
-  model: "Client",
-  field: "_index",
-  startAt: 1
-});
+// clientSchema.plugin(autoIncrement.plugin, {
+//   model: "Client",
+//   field: "_index",
+//   startAt: 1
+// });
+
+var Client = mongoose.model("Client", clientSchema);
 
 module.exports = { Client };

@@ -175,7 +175,6 @@ app.delete("/clients/:id", authenticate, (req, res) => {
     });
 });
 
-// Todo
 app.patch("/clients/:id", authenticate, (req, res) => {
   var id = req.params.id;
   var body = _.pick(
@@ -207,6 +206,12 @@ app.patch("/clients/:id", authenticate, (req, res) => {
       res.send({ client });
     })
     .catch(e => {});
+});
+
+app.patch("/clients/resetToTest", authenticate, (req, res) => {
+  console.log("Dropping all clients");
+
+  res.send();
 });
 
 app.listen(process.env.PORT, () =>
