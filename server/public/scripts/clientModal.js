@@ -1,9 +1,3 @@
-// TODO: Separate save and close buttons
-// DONE: Track which fields are unsaved
-// TODO: Add undo button to reset field to last save
-// TODO: Add warning when closing with unsaved data
-// TODO: Add delete button
-
 $.widget("app.clientModal", {
   _init: function() {
     this.options = {
@@ -34,6 +28,7 @@ $.widget("app.clientModal", {
     this.editForm = $(this.element).find(".clientFormContainer");
     this.editButton = $(this.element).find(".editBtn");
     this.saveBtn = $(this.element).find(".saveBtn");
+    this.deleteBtn = $(this.element).find(".deleteBtn");
 
     this.editForm.fadeOut();
     this.saveBtn.fadeOut();
@@ -44,6 +39,7 @@ $.widget("app.clientModal", {
 
     this.editButton.click(this.openEdit.bind(this));
     this.saveBtn.click(this.saveEdit.bind(this));
+    this.deleteBtn.click(this.deleteClient.bind(this));
   },
 
   reset: function() {
@@ -157,8 +153,8 @@ $.widget("app.clientModal", {
     });
   },
 
-  warnEdit: function(fields) {
-    alert("COULD NOT SAVE");
+  warnEdit: function(fields, message) {
+    alert(message || "COULD NOT SAVE");
   },
 
   closeEdit: function() {
@@ -170,6 +166,21 @@ $.widget("app.clientModal", {
       .fadeOut(200)
       .promise()
       .then(() => this.editButton.fadeIn(200));
+  },
+
+  deleteClient: function() {
+    if (confirm("Are you sure?")) {
+      $.ajax({
+        url: "/clients/" + this.id,
+        method: "DELETE",
+        success: () => {
+          $("#clientsTable").bootstrapTable("refresh");
+          this.close();
+        },
+        fail: this.warnEdit,
+        async: false
+      });
+    }
   }
 });
 
