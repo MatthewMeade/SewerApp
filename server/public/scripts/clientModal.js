@@ -1,3 +1,9 @@
+// TODO: Separate save and close buttons
+// DONE: Track which fields are unsaved
+// TODO: Add undo button to reset field to last save
+// TODO: Add warning when closing with unsaved data
+// TODO: Add delete button
+
 $.widget("app.clientModal", {
   _init: function() {
     this.options = {
@@ -14,6 +20,7 @@ $.widget("app.clientModal", {
         postCode: "Postal Code"
       }
     };
+    this.data = {};
     $("#clientModal").modal({
       show: false,
       backdrop: "static",
@@ -39,21 +46,30 @@ $.widget("app.clientModal", {
     this.saveBtn.click(this.saveEdit.bind(this));
   },
 
-  open: function(id, newClient) {
-    this.id = id;
-    this.loadData(id);
+  reset: function() {
+    this.id = undefined;
+    this.title.text("");
+    this.data = {};
+    $(this.editForm)
+      .find("form")[0]
+      .reset();
+  },
 
-    if (newClient) {
+  open: function(id) {
+    if (!id) {
       this.openEdit();
+    } else {
+      this.id = id;
+      this.loadData();
     }
 
     $("#clientModal").modal("show");
   },
 
   close: function() {
-    this.data = {};
     this.closeEdit();
     $("#clientModal").modal("hide");
+    this.reset();
   },
 
   loadData: function() {
@@ -95,25 +111,46 @@ $.widget("app.clientModal", {
       .then(() => this.saveBtn.fadeIn(200));
   },
 
+  createClient(callback) {
+    $.ajax({
+      url: "/clients/",
+      method: "POST",
+      success: res => {
+        this.id = res._id;
+        callback();
+      }
+    });
+  },
+
   saveEdit: function() {
-    var data = {};
+    // Prevent changes made to focus since last blur not being saved
+    $(":focus").blur();
+
+    var formData = {};
     var elems = $(this.editForm)
       .find("form")
       .serializeArray()
       .forEach(e => {
-        data[e.name] = e.value;
+        if (e.value) formData[e.name] = e.value;
       });
+
+    //TODO: Replace with propper form validation
+    if ($.isEmptyObject(formData)) {
+      return alert("Can't save: No data");
+    }
+
+    if (!this.id) {
+      return this.createClient(this.saveEdit);
+    }
+
     $.ajax({
       url: "/clients/" + this.id,
-      data,
+      data: formData,
       method: "PATCH",
       success: () => {
         $("#clientsTable").bootstrapTable("refresh");
         this.loadData(this.id);
         this.closeEdit();
-        $(this.editForm)
-          .find("form")[0]
-          .reset();
       },
       fail: this.warnEdit,
       async: false

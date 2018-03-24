@@ -74,13 +74,6 @@ $(document).ready(() => {
   )
     .prependTo("#clients .fixed-table-toolbar .columns")
     .click(() => {
-      $.ajax({
-        url: "/clients/",
-        method: "POST",
-        success: res => {
-          $("#clientModal").clientModal("open", res._id, true);
-        },
-        async: false
-      });
+      $("#clientModal").clientModal("open", undefined);
     });
 });
