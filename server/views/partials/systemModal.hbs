@@ -1,27 +1,93 @@
-<div class="modal fade" id="systemModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="systemModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="systemModalTitle">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
             </div>
-            <div class="modal-body">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                    magna aliqua. Turpis nunc eget lorem dolor. Orci sagittis eu volutpat odio facilisis mauris sit. Magna
-                    eget est lorem ipsum dolor sit amet consectetur adipiscing. Vulputate sapien nec sagittis aliquam malesuada
-                    bibendum. Malesuada proin libero nunc consequat interdum varius sit amet. Ut diam quam nulla porttitor
-                    massa id neque aliquam vestibulum. In eu mi bibendum neque egestas. Etiam non quam lacus suspendisse
-                    faucibus interdum posuere lorem. Id velit ut tortor pretium viverra. Eu tincidunt tortor aliquam nulla
-                    facilisi. Sit amet volutpat consequat mauris. Sed arcu non odio euismod lacinia at quis risus. Pulvinar
-                    mattis nunc sed blandit. Enim nec dui nunc mattis enim ut tellus elementum. Erat velit scelerisque in
-                    dictum non consectetur. Ipsum nunc aliquet bibendum enim facilisis gravida neque convallis a. Dui vivamus
-                    arcu felis bibendum ut tristique. Neque convallis a cras semper auctor
+            <div id='systemModalBody' class="modal-body container-fluid">
+
+                <div class='row systemInfo clearfix '>
+                    {{!--
+                    <h2 class='col-12'>System Info: </h2><br /> --}}
+                </div>
+                <div class="systemFormContainer container-fluid">
+                    <form id="systemForm" class='row'>
+                        <h3>Edit System <a class="fas fa-trash-alt fa-xs deleteBtn" id="systemDeleteButton"></a></h3>
+                        <div class='col-lg-6'>
+                            <div class="form-group">
+                                <legend id="systemNameLegend"><i class="fas fa-id-card"></i> System Name</legend>
+
+                                <label for="systemFirstName" class="">First Name</label>
+                                <input type="text" class="form-control " id="systemFirstName" placeholder="Eg: Matthew" name='firstName'>
+
+                                <label for="systemLastName" class="">Last Name</label>
+                                <input type="text" class="form-control " id="systemLastName" placeholder="Eg: Meade" name='lastName'>
+
+                                <label for="systemTitle" class="">Title</label>
+                                <input type="text" class="form-control " id="systemTitle" placeholder="Eg: Mr" name='title'>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <legend id="systemInfoLegend"><i class="fas fa-phone fa-xs"></i> Contact Info</i>
+                                </legend>
+
+                                <label for="systemEmail" class="">Email</label>
+                                <input type="email" class="form-control " id="systemEmail" placeholder="Eg: example@gmail.com" name='email'>
+
+
+                                <label for="systemHomePhone" class="">Home Phone</label>
+                                <input type="tel" class="form-control " id="systemHomePhone" placeholder="Eg: 709-555-1234" name='homePhone'>
+
+                                <label for="systemMobilePhone" class="">Mobile Phone</label>
+                                <input type="tel" class="form-control " id="systemMobilePhone" placeholder="Eg: 709-555-4321" name='mobilePhone'>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <legend id="systemMailLegend"><i class="fas fa-envelope"></i> Mailing Info</i>
+                                </legend>
+
+                                <label for="systemstreetAddress" class="">Street</label>
+                                <input type="text" class="form-control " id="systemstreetAddress" placeholder="Eg: 1 Main Street" name='streetAddress'>
+
+
+                                <label for="systemCity" class="">City</label>
+                                <input type="text" class="form-control " id="systemCity" placeholder="Eg: St. John's" name='city'>
+
+                                <label for="systemProvince" class="">Province</label>
+                                <input type="text" class="form-control " id="systemProvince" placeholder="Eg: NL" name='province'>
+
+                                <label for="systemPostCode" class="">Postal Code</label>
+                                <input type="text" class="form-control " id="systemPostalCode" placeholder="Eg: A1A 3R3" name='postCode'>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <legend id="systemNotesLegend"><i class="fas fa-sticky-note"></i> Notes</i>
+                                </legend>
+
+                                <textarea name="notes" id="systemNotes" placeholder="Enter other relevant system information"></textarea>
+
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+            <div class=" modal-footer ">
+                {{!-- <button type="button " class="btn btn-secondary closeBtn ">Close</button> --}}
+                <button type="button " class="btn btn-secondary editBtn ">Edit</button>
+
+                <button type="button " class="btn btn-primary saveBtn">Save changes</button>
             </div>
         </div>
     </div>

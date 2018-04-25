@@ -8,7 +8,7 @@ const hbs = require("hbs");
 const cookieParser = require("cookie-parser");
 
 const { mongoose } = require("./db/mongoose.js");
-const { Report } = require("./models/report.js");
+const { System } = require("./models/system.js");
 const { Client } = require("./models/client.js");
 const { User } = require("./models/user.js");
 const { authenticate } = require("./middleware/authenticate.js");
@@ -103,6 +103,7 @@ app.delete("/users/me/token", authenticate, (req, res) => {
   );
 });
 
+// Clients
 app.post("/clients", authenticate, (req, res) => {
   var client = new Client({
     _creator: req.user._id
@@ -208,11 +209,126 @@ app.patch("/clients/:id", authenticate, (req, res) => {
     .catch(e => {});
 });
 
-app.patch("/clients/resetToTest", authenticate, (req, res) => {
-  console.log("Dropping all clients");
+// Systems
+// POST /systems
+app.post("/systems", authenticate, (req, res) => {
+  var system = new System({
+    _creator: req.user._id
+  });
 
-  res.send();
+  system.save().then(
+    doc => {
+      res.send(doc);
+    },
+    e => {
+      res.status(400).send(e);
+    }
+  );
 });
+
+// GET  /systems
+app.get("/systems", authenticate, (req, res) => {
+  System.find({
+    _creator: req.user._id
+  }).then(
+    systems => {
+      res.send({ systems });
+    },
+    e => {
+      res.status(400).send(e);
+    }
+  );
+});
+
+// GET /systems/:id
+app.get("/systems/:id", authenticate, (req, res) => {
+  var id = req.params.id;
+
+  if (!ObjectID.isValid(id)) {
+    return res.status(404).send();
+  }
+
+  System.findOne({
+    _id: id,
+    _creator: req.user._id
+  })
+    .then(system => {
+      if (!system) {
+        return res.status(404).send();
+      }
+      res.send({ sustem });
+    })
+    .catch(e => {
+      res.status(400).send(e);
+    });
+});
+
+// DELETE /systems/:id
+app.delete("/systems/:id", authenticate, (req, res) => {
+  var id = req.params.id;
+
+  if (!ObjectID.isValid(id)) {
+    return res.status(404).send();
+  }
+
+  System.findOneAndRemove({
+    _id: id,
+    _creater: req.user._id
+  })
+    .then(system => {
+      if (!system) {
+        return res.status(404).send();
+      }
+      res.send({ client });
+    })
+    .catch(e => {
+      res.status(404).send(e);
+    });
+});
+
+// PATCH /systems/:id
+app.patch("/systems/:id", authenticate, (req, res) => {
+  var id = req.params.id;
+
+  if (!ObjectID.isValid(id)) {
+    return res.status(404).send();
+  }
+
+  var id = req.params.id;
+  var body = _.pick(
+    req.body,
+    Object.keys(mongoose.model("System").schema.obj).filter(k => k[0] !== "_")
+  );
+
+  if (!ObjectID.isValid(id)) {
+    return res.status(404).send();
+  }
+
+  System.findOneAndUpdate(
+    {
+      _id: id,
+      _creator: req.user._id
+    },
+    {
+      $set: body
+    },
+    {
+      new: true
+    }
+  )
+    .then(system => {
+      if (!system) {
+        return res.status(400).send();
+      }
+
+      res.send({ system });
+    })
+    .catch(e => {});
+});
+
+// FILE
+// POST /file
+// GET /file/:md5
 
 app.listen(process.env.PORT, () =>
   console.log(`Started on port ${process.env.PORT}`)

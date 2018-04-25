@@ -52,12 +52,6 @@ var clientSchema = new mongoose.Schema({
   }
 });
 
-// clientSchema.plugin(autoIncrement.plugin, {
-//   model: "Client",
-//   field: "_index",
-//   startAt: 1
-// });
-
 var Client = mongoose.model("Client", clientSchema);
 
 module.exports = { Client };
