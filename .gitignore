@@ -3,3 +3,4 @@ node_modules/
 server/config/config.json
 files/
 TODO.todo
+/server/uploads
