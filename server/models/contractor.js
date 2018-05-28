@@ -8,6 +8,6 @@ var contractoSchema = new mongoose.Schema({
   }
 });
 
-var Contractor = mongoose.model("System", contractoSchema);
+var Contractor = mongoose.model("Contractor", contractoSchema);
 
 module.exports = { Contractor };

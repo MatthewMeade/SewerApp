@@ -9,6 +9,6 @@ var specSchema = new mongoose.Schema({
   }
 });
 
-var Spec = mongoose.model("System", specSchema);
+var Spec = mongoose.model("Spec", specSchema);
 
 module.exports = { Spec };

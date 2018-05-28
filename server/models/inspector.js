@@ -8,6 +8,6 @@ var inspectorSchema = new mongoose.Schema({
   }
 });
 
-var Inspector = mongoose.model("System", inspectorSchema);
+var Inspector = mongoose.model("Inspector", inspectorSchema);
 
 module.exports = { Inspector };

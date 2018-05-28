@@ -1,3 +1,6 @@
+// TODO
+// Refactor route functions
+
 require("./config/config.js");
 
 const _ = require("lodash");
@@ -14,7 +17,11 @@ const { mongoose } = require("./db/mongoose.js");
 const { System } = require("./models/system.js");
 const { Client } = require("./models/client.js");
 const { User } = require("./models/user.js");
-const { Upload } = require("./models/upload");
+const { Upload } = require("./models/upload.js");
+const { Contractor } = require("./models/contractor.js");
+const { Inspector } = require("./models/inspector.js");
+const { Spec } = require("./models/spec.js");
+const RouteMethods = require("./routeMethods.js");
 
 const { authenticate } = require("./middleware/authenticate.js");
 
@@ -414,6 +421,159 @@ app.get("/file/:name", authenticate, (req, res) => {
 
   res.download(path);
 });
+
+// Inspector
+// GET
+app.get("/inspectors", authenticate, (req, res) => {
+  Inspector.find({
+    _creator: req.user._id
+  }).then(
+    inspector => {
+      res.send({ inspector });
+    },
+    e => {
+      res.status(400).send(e);
+    }
+  );
+});
+
+// POST
+app.post("/inspectors", authenticate, (req, res) => {
+  var inspector = new Inspector({
+    _creator: req.user._id,
+    name: req.body.name
+  });
+
+  inspector.save().then(
+    doc => {
+      res.send({ doc });
+    },
+    e => {
+      res.status(400).send(e);
+    }
+  );
+});
+
+// PATCH
+app.patch("/inspectors/:id", authenticate, (req, res) => {
+  var id = req.params.id;
+  var body = { name: req.body.name };
+
+  if (!ObjectID.isValid(id)) {
+    return res.status(404).send();
+  }
+
+  Inspector.findOneAndUpdate(
+    {
+      _id: id,
+      _creator: req.user._id
+    },
+    {
+      $set: body
+    },
+    {
+      new: true
+    }
+  )
+    .then(inspector => {
+      if (!inspector) {
+        return res.status(400).send();
+      }
+
+      res.send({ inspector });
+    })
+    .catch(e => res.status(400).send(e));
+});
+
+// DELETE
+app.delete("/inspectors/:id", authenticate, (req, res) => {
+  var id = req.params.id;
+
+  if (!ObjectID.isValid(id)) {
+    return res.status(404).send();
+  }
+
+  Inspector.findOneAndRemove({
+    _id: id,
+    _creator: req.user._id
+  })
+    .then(inspector => {
+      if (!inspector) {
+        return res.status(404).send();
+      }
+      res.send({ inspector });
+    })
+    .catch(e => {
+      res.status(400).send(e);
+    });
+});
+
+// Contractor
+// GET
+app.get("/contractors", authenticate, (req, res) =>
+  RouteMethods.getAll(req, res, Contractor)
+);
+app.get("/contractors/:id", authenticate, (req, res) =>
+  RouteMethods.getById(req, res, Contractor)
+);
+
+// POST
+app.post("/contractors/", authenticate, (req, res) => {
+  var props = {
+    name: req.body.name
+  };
+  RouteMethods.postWithProps(req, res, Contractor, props);
+});
+
+// PATCH
+app.patch("/contractors/:id", authenticate, (req, res) => {
+  var props = _.pick(
+    req.body,
+    Object.keys(mongoose.model("Contractor").schema.obj).filter(
+      k => k[0] !== "_"
+    )
+  );
+
+  console.log(props);
+
+  RouteMethods.patchProps(req, res, Contractor, props);
+});
+
+// DELETE
+app.delete("/contractors/:id", authenticate, (req, res) =>
+  RouteMethods.deleteById(req, res, Contractor)
+);
+
+// Specs
+// GET
+app.get("/specs", authenticate, (req, res) =>
+  RouteMethods.getAll(req, res, Spec)
+);
+app.get("/specs/:id", authenticate, (req, res) =>
+  RouteMethods.getById(req, res, Spec)
+);
+
+// POST
+app.post("/specs/", authenticate, (req, res) => {
+  var props = {
+    name: req.body.name,
+    file: req.body.file
+  };
+  RouteMethods.postWithProps(req, res, Spec, props);
+});
+
+app.patch("/specs/:id", authenticate, (req, res) => {
+  var props = _.pick(
+    req.body,
+    Object.keys(mongoose.model("Spec").schema.obj).filter(k => k[0] !== "_")
+  );
+
+  RouteMethods.patchProps(req, res, Spec, props);
+});
+
+app.delete("/specs/:id", authenticate, (req, res) =>
+  RouteMethods.deleteById(req, res, Spec)
+);
 
 app.listen(process.env.PORT, () =>
   console.log(`Started on port ${process.env.PORT}`)
