@@ -369,3 +369,70 @@ body {
   color: #c33;
   transform: scale(0.9);
 }
+
+#inspectors {
+  min-width: 600px;
+  width: 25%;
+  border: 1px solid grey;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px 2px gray;
+  padding: 5px;
+}
+
+#inspectors h2 {
+  text-align: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  padding-bottom: 5px;
+}
+
+#inspectors input {
+  width: 65%;
+  margin-left: 5px;
+  margin-right: 5%;
+  text-indent: 0.5em;
+}
+
+#inspectors .addBtn {
+  width: 24%;
+  height: 30px;
+  padding: 0 12px;
+  margin-bottom: 5px;
+}
+
+#inspectorBody {
+  margin-top: 10px;
+}
+
+#inspectorBody button {
+  float: right;
+  height: 30px;
+  padding: 0 12px;
+  margin: 0 10px;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+#inspectorBody .inspectorListItem {
+  padding: 5px;
+  margin: 5px;
+  border-radius: 3px;
+  height: 40px;
+}
+
+#inspectorBody .inspectorListItem:nth-child(odd) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+#inspectorBody .inspectorName {
+  font-size: 1.2em;
+}
+
+#inspectorBody button i {
+  pointer-events: none !important;
+}
+
+#inspectors.editLocked button:not(.activeEdit) {
+  pointer-events: none;
+  background-color: gray;
+  /* display: none; */
+}
