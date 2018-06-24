@@ -1,32 +1,89 @@
 var mongoose = require("mongoose");
 
+const ObjectId = mongoose.Schema.Types.ObjectId;
+
 var systemSchema = new mongoose.Schema({
-  inspector: String, // TODO: Refactor into 'customSelects' model
-  replacement: Boolean,
-  client: mongoose.Schema.Types.ObjectId,
-  location: String,
-  siteDescription: String,
-  waterSupply: String,
-  lotStatus: String,
-  lotDepth: Number,
-  lotWidth: Number,
-  bedrooms: Number,
-  driveway: String,
-  siteImages: [String],
-  excavationDate: Date,
-  excavationDepth: Number,
-  contractor: String, // TODO: Refactor into 'customSelects' model,
-  soilLayers: [
+  // General
+  client: ObjectId,
+  inspector: ObjectId,
+  contractor: ObjectId,
+  approved: Boolean,
+  paid: Boolean,
+  report: ObjectId,
+  invoice: ObjectId,
+  receipt: ObjectId,
+
+  // Lot
+  municipality: String,
+  lat: Number,
+  long: Number,
+  width: Number,
+  length: Number,
+  water: String,
+
+  // Inspector Letter
+  inspectorLetterDate: Date,
+  letterletterBody: String,
+
+  // Photos
+  sitePhotos: [ObjectId],
+  mapPhotos: [ObjectId],
+  floorPlans: [ObjectId],
+
+  // Client Letter
+  clientLeterDate: Date,
+  clientLetterBody: String,
+
+  // Test pits
+  testPitDate: Date,
+  pitDepth: Number,
+  layers: [
     {
-      depthRange: [Number],
-      depthDescription: String
+      depth: Number,
+      description: String,
+      observations: String
     }
   ],
-  percTestDate: Date,
-  percTestRates: [Number],
-  percTestConclusion: String,
+  conslusion: String,
+  pitPictures: [ObjectId],
+
+  // Perc Tests
+  percTestLocation: String,
+  perctestDate: Date,
+  onSitePercRates: [{ perc: Number }],
+  offSitePercRates: [{ perc: Number }],
+  pitDrawing: ObjectId,
+
+  // Design Calculations
+  numBedrooms: Number,
+  squareFootage: Number,
+  fixtureUnits: [
+    {
+      basin: Number,
+      bathtub: Number,
+      bathroomGroup: Number,
+      bidet: Number,
+      floorDrain4in: Number,
+      floorDrain3in: Number,
+      floorDrain2in: Number,
+      kitchenSink: Number,
+      laundryStandPipe: Number,
+      laundryTray: Number,
+      showerHeadSingle: Number,
+      showerHeadMany: Number,
+      waterCloset: Number
+    }
+  ],
+  outlets: Number,
+  trenchDepth: Number,
+  importedFill: Number,
+  sitePlans: [{ plan: ObjectId }],
+
+  // Specs
+  specList: [{ spec: ObjectId }],
+
   _creator: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: ObjectId,
     required: true
   }
 });
