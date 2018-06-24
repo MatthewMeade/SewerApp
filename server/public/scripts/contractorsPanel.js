@@ -1,8 +1,8 @@
-$.widget("app.inspectorsPanel", {
+$.widget("app.contractorsPanel", {
   _init: function() {
     this.addButton = $(this.element).find(".addBtn");
-    this.inputField = $(this.element).find("#newInspInput");
-    this.body = $(this.element).find("#inspectorBody");
+    this.inputField = $(this.element).find("#newContInput");
+    this.body = $(this.element).find("#contractorBody");
 
     this.addButton.click(this.addBtnClicked);
     this.inputField.keypress(this.inputKeyDown);
@@ -12,23 +12,23 @@ $.widget("app.inspectorsPanel", {
 
   buildRowHTML() {
     this.body.empty();
-    this.data.forEach(inspector => {
-      var row = $(`<div class="inspectorListItem">
-        <span class="inspectorName">${inspector.name}</span>
-        <button class="btn btn-danger delBtn"><i class="fas fa-trash-alt"></i></button>
-        <button class="btn btn-warning editBtn"><i class="fas fa-pencil-alt"></i></button>
-    </div>`);
+    this.data.forEach(contractor => {
+      var row = $(`<div class="contractorListItem">
+          <span class="contractorName">${contractor.name}</span>
+          <button class="btn btn-danger delBtn"><i class="fas fa-trash-alt"></i></button>
+          <button class="btn btn-warning editBtn"><i class="fas fa-pencil-alt"></i></button>
+      </div>`);
 
       var del = row
         .find(".delBtn")
-        .data("inspId", inspector._id)
-        .data("inspName", inspector.name)
+        .data("inspId", contractor._id)
+        .data("inspName", contractor.name)
         .click(this.deleteBtnClicked);
 
       var edit = row
         .find(".editBtn")
-        .data("inspId", inspector._id)
-        .data("inspName", inspector.name)
+        .data("inspId", contractor._id)
+        .data("inspName", contractor.name)
         .data("status", "ready")
         .click(this.editBtnClicked);
 
@@ -38,9 +38,9 @@ $.widget("app.inspectorsPanel", {
 
   loadData: function() {
     $.ajax({
-      url: "/inspectors/",
+      url: "/contractors/",
       success: res => {
-        this.data = res.inspector;
+        this.data = res.doc;
       },
       async: false
     });
@@ -53,47 +53,47 @@ $.widget("app.inspectorsPanel", {
 
     if (confirm(`Are you sure you wish to delete ${name}?`)) {
       $.ajax({
-        url: "/inspectors/" + id,
+        url: "/contractors/" + id,
         async: false,
         method: "delete"
       });
 
-      $("#inspectors").inspectorsPanel("loadData");
+      $("#contractors").contractorsPanel("loadData");
     }
   },
 
   addBtnClicked() {
-    $("#inspectors").inspectorsPanel("postNewName");
+    $("#contractors").contractorsPanel("postNewName");
   },
 
   inputKeyDown(e) {
     if (e.which == "13") {
-      $("#inspectors").inspectorsPanel("postNewName");
+      $("#contractors").contractorsPanel("postNewName");
     }
   },
 
   postNewName: function(name) {
-    var name = $("#newInspInput")
+    var name = $("#newContInput")
       .val()
       .trim();
 
     if (name != "") {
       $.ajax({
-        url: "/inspectors/",
+        url: "/contractors/",
         data: { name },
         async: false,
         method: "post"
       });
 
-      $("#inspectors").inspectorsPanel("loadData");
-      $("#inspectors input").val("");
+      $("#contractors").contractorsPanel("loadData");
+      $("#contractors input").val("");
     }
   },
 
   editBtnClicked: function() {
     var status = $(this).data("status");
     var row = $(this).parent();
-    var label = row.find(".inspectorName");
+    var label = row.find(".contractorName");
 
     if (status == "ready") {
       var editInput = $(`<input type='text' class='nameEdit'/>`).val(
@@ -108,19 +108,19 @@ $.widget("app.inspectorsPanel", {
 
       $(this).data("status", "editing");
 
-      $("#inspectors").inspectorsPanel("lockEdit", true);
+      $("#contractors").contractorsPanel("lockEdit", true);
     } else {
       var input = row.find("input").val();
 
       $.ajax({
-        url: "/inspectors/" + $(this).data("inspId"),
+        url: "/contractors/" + $(this).data("inspId"),
         data: { name: input },
         async: false,
         method: "patch"
       });
 
-      $("#inspectors").inspectorsPanel("lockEdit", false);
-      $("#inspectors").inspectorsPanel("loadData");
+      $("#contractors").contractorsPanel("lockEdit", false);
+      $("#contractors").contractorsPanel("loadData");
     }
   },
 
@@ -134,5 +134,5 @@ $.widget("app.inspectorsPanel", {
 });
 
 $(document).ready(function() {
-  $("#inspectors").inspectorsPanel();
+  $("#contractors").contractorsPanel();
 });

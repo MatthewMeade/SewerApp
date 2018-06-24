@@ -108,14 +108,16 @@ $.widget("app.clientModal", {
   },
 
   createClient(callback) {
+    var id;
     $.ajax({
       url: "/clients/",
       method: "POST",
       success: res => {
-        this.id = res._id;
-        callback();
-      }
+        id = res._id;
+      },
+      async: false
     });
+    return id;
   },
 
   saveEdit: function() {
@@ -136,7 +138,7 @@ $.widget("app.clientModal", {
     }
 
     if (!this.id) {
-      return this.createClient(this.saveEdit);
+      this.id = this.createClient();
     }
 
     $.ajax({

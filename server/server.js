@@ -364,7 +364,7 @@ app.post("/file/upload", upload.single("file"), authenticate, (req, res) => {
     uploadName: file.originalname
   }).then(existingUpload => {
     if (existingUpload) {
-      return res.send({ existingUpload });
+      return res.send({ doc: existingUpload });
     }
 
     var upload = new Upload({
@@ -419,7 +419,7 @@ app.get("/file/:name", authenticate, (req, res) => {
     return res.status(404).send();
   }
 
-  res.download(path);
+  res.sendFile(path);
 });
 
 // Inspector
