@@ -575,6 +575,21 @@ app.delete("/specs/:id", authenticate, (req, res) =>
   RouteMethods.deleteById(req, res, Spec)
 );
 
+// System Routes
+// Get
+app.get("/systems", authenticate, (req, res) => {});
+
+app.get("/systems/:id", authenticate, (req, res) => {});
+
+// Post
+app.post("/systems", authenticate, (rew, res) => {});
+
+// Patch
+app.patch("/systems/:id", authenticate, (req, res) => {});
+
+// Delete
+app.delete("/systems/:id", authenticate, (req, res) => {});
+
 app.listen(process.env.PORT, () =>
   console.log(`Started on port ${process.env.PORT}`)
 );
