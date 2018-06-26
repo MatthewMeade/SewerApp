@@ -469,7 +469,7 @@ app.get("/systems/:id", authenticate, (req, res) => {
 });
 
 // Post
-app.post("/systems", authenticate, (rew, res) => {
+app.post("/systems", authenticate, (req, res) => {
   RouteMethods.postWithProps(req, res, System, {});
 });
 
