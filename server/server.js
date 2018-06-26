@@ -33,7 +33,7 @@ hbs.registerHelper("getCurrentYear", () => {
 });
 
 app.set("view engine", "hbs");
-app.set("views", __dirname + "\\views");
+app.set("views", __dirname + "/views");
 
 app.use(express.static(__dirname + "/public"));
 
@@ -217,123 +217,6 @@ app.patch("/clients/:id", authenticate, (req, res) => {
       }
 
       res.send({ client });
-    })
-    .catch(e => {});
-});
-
-// Systems
-// POST /systems
-app.post("/systems", authenticate, (req, res) => {
-  var system = new System({
-    _creator: req.user._id
-  });
-
-  system.save().then(
-    doc => {
-      res.send(doc);
-    },
-    e => {
-      res.status(400).send(e);
-    }
-  );
-});
-
-// GET  /systems
-app.get("/systems", authenticate, (req, res) => {
-  System.find({
-    _creator: req.user._id
-  }).then(
-    systems => {
-      res.send({ systems });
-    },
-    e => {
-      res.status(400).send(e);
-    }
-  );
-});
-
-// GET /systems/:id
-app.get("/systems/:id", authenticate, (req, res) => {
-  var id = req.params.id;
-
-  if (!ObjectID.isValid(id)) {
-    return res.status(404).send();
-  }
-
-  System.findOne({
-    _id: id,
-    _creator: req.user._id
-  })
-    .then(system => {
-      if (!system) {
-        return res.status(404).send();
-      }
-      res.send({ sustem });
-    })
-    .catch(e => {
-      res.status(400).send(e);
-    });
-});
-
-// DELETE /systems/:id
-app.delete("/systems/:id", authenticate, (req, res) => {
-  var id = req.params.id;
-
-  if (!ObjectID.isValid(id)) {
-    return res.status(404).send();
-  }
-
-  System.findOneAndRemove({
-    _id: id,
-    _creator: req.user._id
-  })
-    .then(system => {
-      if (!system) {
-        return res.status(404).send();
-      }
-      res.send({ client });
-    })
-    .catch(e => {
-      res.status(404).send(e);
-    });
-});
-
-// PATCH /systems/:id
-app.patch("/systems/:id", authenticate, (req, res) => {
-  var id = req.params.id;
-
-  if (!ObjectID.isValid(id)) {
-    return res.status(404).send();
-  }
-
-  var id = req.params.id;
-  var body = _.pick(
-    req.body,
-    Object.keys(mongoose.model("System").schema.obj).filter(k => k[0] !== "_")
-  );
-
-  if (!ObjectID.isValid(id)) {
-    return res.status(404).send();
-  }
-
-  System.findOneAndUpdate(
-    {
-      _id: id,
-      _creator: req.user._id
-    },
-    {
-      $set: body
-    },
-    {
-      new: true
-    }
-  )
-    .then(system => {
-      if (!system) {
-        return res.status(400).send();
-      }
-
-      res.send({ system });
     })
     .catch(e => {});
 });
@@ -577,18 +460,38 @@ app.delete("/specs/:id", authenticate, (req, res) =>
 
 // System Routes
 // Get
-app.get("/systems", authenticate, (req, res) => {});
+app.get("/systems", authenticate, (req, res) => {
+  RouteMethods.getAll(req, res, System);
+});
 
-app.get("/systems/:id", authenticate, (req, res) => {});
+app.get("/systems/:id", authenticate, (req, res) => {
+  RouteMethods.getById(req, res, System);
+});
 
 // Post
-app.post("/systems", authenticate, (rew, res) => {});
+app.post("/systems", authenticate, (rew, res) => {
+  RouteMethods.postWithProps(req, res, System, {});
+});
 
 // Patch
-app.patch("/systems/:id", authenticate, (req, res) => {});
+app.patch("/systems/:id", authenticate, (req, res) => {
+  for (key in req.body) {
+    req.body[key] = JSON.parse(req.body[key]);
+  }
+  var props = _.pick(
+    req.body,
+    Object.keys(mongoose.model("System").schema.obj).filter(k => k[0] !== "_")
+  );
+
+  console.log("Request body: " + JSON.stringify(req.body));
+  console.log("Picked Props: " + JSON.stringify(props));
+  RouteMethods.patchProps(req, res, System, props);
+});
 
 // Delete
-app.delete("/systems/:id", authenticate, (req, res) => {});
+app.delete("/systems/:id", authenticate, (req, res) => {
+  RouteMethods.deleteById(req, res, System);
+});
 
 app.listen(process.env.PORT, () =>
   console.log(`Started on port ${process.env.PORT}`)
