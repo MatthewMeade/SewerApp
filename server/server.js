@@ -1,6 +1,3 @@
-// TODO
-// Refactor route functions
-
 require("./config/config.js");
 
 const _ = require("lodash");
@@ -13,17 +10,10 @@ const multer = require("multer");
 const md5 = require("md5");
 const fs = require("fs");
 
-const { mongoose } = require("./db/mongoose.js");
-const { System } = require("./models/system.js");
-const { Client } = require("./models/client.js");
-const { User } = require("./models/user.js");
-const { Upload } = require("./models/upload.js");
-const { Contractor } = require("./models/contractor.js");
-const { Inspector } = require("./models/inspector.js");
-const { Spec } = require("./models/spec.js");
 const RouteMethods = require("./routeMethods.js");
 
 const { authenticate } = require("./middleware/authenticate.js");
+const Models = require("./ModelMethods.js");
 
 var app = express();
 
@@ -117,108 +107,39 @@ app.delete("/users/me/token", authenticate, (req, res) => {
 
 // Clients
 app.post("/clients", authenticate, (req, res) => {
-  var client = new Client({
-    _creator: req.user._id
+  Models.createNew("Client", req.user._id, (doc, e) => {
+    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
   });
-
-  client.save().then(
-    doc => {
-      res.send(doc);
-    },
-    e => {
-      res.status(400).send(e);
-    }
-  );
 });
 
 app.get("/clients", authenticate, (req, res) => {
-  Client.find({
-    _creator: req.user._id
-  }).then(
-    clients => {
-      res.send({ clients });
-    },
-    e => {
-      res.status(400).send(e);
-    }
-  );
+  Models.getAll("Client", req.user._id, (doc, e) => {
+    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
+  });
 });
 
 app.get("/clients/:id", authenticate, (req, res) => {
-  var id = req.params.id;
-
-  if (!ObjectID.isValid(id)) {
-    return res.status(404).send();
-  }
-
-  Client.findOne({
-    _id: id,
-    _creator: req.user._id
-  })
-    .then(client => {
-      if (!client) {
-        return res.status(404).send();
-      }
-      res.send({ client });
-    })
-    .catch(e => {
-      res.status(400).send(e);
-    });
+  Models.getById("Client", req.params.id, req.user._id, (doc, e) => {
+    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
+  });
 });
 
 app.delete("/clients/:id", authenticate, (req, res) => {
-  var id = req.params.id;
-
-  if (!ObjectID.isValid(id)) {
-    return res.status(404).send();
-  }
-
-  Client.findOneAndRemove({
-    _id: id,
-    _creator: req.user._id
-  })
-    .then(client => {
-      if (!client) {
-        return res.status(404).send();
-      }
-      res.send({ client });
-    })
-    .catch(e => {
-      res.status(400).send(e);
-    });
+  Models.deleteById("Client", req.params._id, req.user._id, (doc, e) => {
+    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
+  });
 });
 
 app.patch("/clients/:id", authenticate, (req, res) => {
-  var id = req.params.id;
-  var body = _.pick(
+  Models.updateById(
+    "Client",
+    req.params._id,
     req.body,
-    Object.keys(mongoose.model("Client").schema.obj).filter(k => k[0] !== "_")
-  );
-
-  if (!ObjectID.isValid(id)) {
-    return res.status(404).send();
-  }
-
-  Client.findOneAndUpdate(
-    {
-      _id: id,
-      _creator: req.user._id
-    },
-    {
-      $set: body
-    },
-    {
-      new: true
+    req.user._id,
+    (doc, e) => {
+      res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
     }
-  )
-    .then(client => {
-      if (!client) {
-        return res.status(400).send();
-      }
-
-      res.send({ client });
-    })
-    .catch(e => {});
+  );
 });
 
 // FILE
@@ -308,16 +229,9 @@ app.get("/file/:name", authenticate, (req, res) => {
 // Inspector
 // GET
 app.get("/inspectors", authenticate, (req, res) => {
-  Inspector.find({
-    _creator: req.user._id
-  }).then(
-    inspector => {
-      res.send({ inspector });
-    },
-    e => {
-      res.status(400).send(e);
-    }
-  );
+  Models.getAll("Inspector", req.user._id, (doc, e) => {
+    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
+  });
 });
 
 // POST
@@ -396,6 +310,7 @@ app.delete("/inspectors/:id", authenticate, (req, res) => {
 app.get("/contractors", authenticate, (req, res) =>
   RouteMethods.getAll(req, res, Contractor)
 );
+
 app.get("/contractors/:id", authenticate, (req, res) =>
   RouteMethods.getById(req, res, Contractor)
 );
