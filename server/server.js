@@ -10,8 +10,6 @@ const multer = require("multer");
 const md5 = require("md5");
 const fs = require("fs");
 
-const RouteMethods = require("./routeMethods.js");
-
 const { authenticate } = require("./middleware/authenticate.js");
 const Models = require("./ModelMethods.js");
 
@@ -105,41 +103,43 @@ app.delete("/users/me/token", authenticate, (req, res) => {
   );
 });
 
-// Clients
-app.post("/clients", authenticate, (req, res) => {
-  Models.createNew("Client", req.user._id, (doc, e) => {
-    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
-  });
-});
+const defaultRoutes = ["System", "Client", "Contractor", "Inspector", "Spec"];
 
-app.get("/clients", authenticate, (req, res) => {
-  Models.getAll("Client", req.user._id, (doc, e) => {
-    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
-  });
-});
-
-app.get("/clients/:id", authenticate, (req, res) => {
-  Models.getById("Client", req.params.id, req.user._id, (doc, e) => {
-    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
-  });
-});
-
-app.delete("/clients/:id", authenticate, (req, res) => {
-  Models.deleteById("Client", req.params._id, req.user._id, (doc, e) => {
-    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
-  });
-});
-
-app.patch("/clients/:id", authenticate, (req, res) => {
-  Models.updateById(
-    "Client",
-    req.params._id,
-    req.body,
-    req.user._id,
-    (doc, e) => {
+defaultRoutes.forEach(name => {
+  // Get All
+  app.get(`/${name}s`, authenticate, (req, res) => {
+    Models.getAll(name, req.user._id, (doc, e) => {
       res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
-    }
-  );
+    });
+  });
+
+  // Get By ID
+  app.get(`/${name}s/:id`, authenticate, (req, res) => {
+    Models.getById(name, req.params.id, req.user._id, (doc, e) => {
+      res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
+    });
+  });
+
+  // Post
+  app.post(`/${name}s`, authenticate, (req, res) => {
+    Models.createNew(name, req.body, req.user._id, (doc, e) => {
+      res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
+    });
+  });
+
+  // Patch
+  app.patch(`/${name}s/:id`, authenticate, (req, res) => {
+    Models.updateById(name, req.params.id, req.body, req.user._id, (doc, e) => {
+      res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
+    });
+  });
+
+  // Delete
+  app.delete(`/${name}s/:id`, authenticate, (req, res) => {
+    Models.deleteById(name, req.params.id, req.user._id, (doc, e) => {
+      res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
+    });
+  });
 });
 
 // FILE
@@ -153,6 +153,7 @@ app.post("/file/upload", upload.single("file"), authenticate, (req, res) => {
 
   if (!fileExists) {
     fs.writeFile(path, file.buffer, err => {
+      console.log("HERE:", err);
       if (err) {
         return res.status(500).send({ err });
       }
@@ -163,56 +164,42 @@ app.post("/file/upload", upload.single("file"), authenticate, (req, res) => {
     }
   }
 
-  Upload.findOne({
+  Models.Upload.findOne({
     md5: filemd5,
     uploadName: file.originalname
-  }).then(existingUpload => {
-    if (existingUpload) {
-      return res.send({ doc: existingUpload });
-    }
+  })
+    .then(existingUpload => {
+      if (existingUpload) {
+        return res.send({ doc: existingUpload });
+      }
 
-    var upload = new Upload({
-      _creator: req.user.id,
-      uploadName: file.originalname,
-      md5: filemd5
-    });
-
-    upload
-      .save()
-      .then(
-        doc => {
-          res.send({ doc });
-        },
-        e => {
-          res.status(400).send(e);
-        }
-      )
-      .catch(e => {
-        res.status(500).send(e);
+      var upload = new Models.Upload({
+        _creator: req.user.id,
+        uploadName: file.originalname,
+        md5: filemd5
       });
-  });
+
+      upload
+        .save()
+        .then(
+          doc => {
+            res.send({ doc });
+          },
+          e => {
+            res.status(400).send(e);
+          }
+        )
+        .catch(e => {
+          res.status(500).send(e);
+        });
+    })
+    .catch(e => console.log(e));
 });
 
 app.get("/file/info/:id", authenticate, (req, res) => {
-  var id = req.params.id;
-
-  if (!ObjectID.isValid(id)) {
-    return res.status(404).send();
-  }
-
-  Upload.findOne({
-    _id: id,
-    _creator: req.user._id
-  })
-    .then(upload => {
-      if (!upload) {
-        return res.status(404).send();
-      }
-      res.send({ upload });
-    })
-    .catch(e => {
-      res.status(400).send(e);
-    });
+  Models.getById("Upload", req.params.id, req.user._id, (doc, e) => {
+    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
+  });
 });
 
 app.get("/file/:name", authenticate, (req, res) => {
@@ -224,168 +211,6 @@ app.get("/file/:name", authenticate, (req, res) => {
   }
 
   res.sendFile(path);
-});
-
-// Inspector
-// GET
-app.get("/inspectors", authenticate, (req, res) => {
-  Models.getAll("Inspector", req.user._id, (doc, e) => {
-    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
-  });
-});
-
-app.get("/inspectors/:id", authenticate, (req, res) => {
-  Models.getById("Inspector", req.params.id, req.user._id, (doc, e) => {
-    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
-  });
-});
-
-// POST
-app.post("/inspectors", authenticate, (req, res) => {
-  Models.createNew("Inspector", req.user._id, (doc, e) => {
-    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
-  });
-});
-
-// PATCH
-app.patch("/inspectors/:id", authenticate, (req, res) => {
-  Models.updateById(
-    "Inspector",
-    req.params._id,
-    req.body,
-    req.user._id,
-    (doc, e) => {
-      res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
-    }
-  );
-});
-
-// DELETE
-app.delete("/inspectors/:id", authenticate, (req, res) => {
-  Models.deleteById("Delete", req.params._id, req.user._id, (doc, e) => {
-    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
-  });
-});
-
-// Contractor
-// GET
-app.get("/contractors", authenticate, (req, res) => {
-  Models.getAll("Contractor", req.user._id, (doc, e) => {
-    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
-  });
-});
-
-app.get("/contractors/:id", authenticate, (req, res) =>
-  Models.getById("Contractor", req.params.id, req.user._id, (doc, e) => {
-    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
-  })
-);
-
-// POST
-app.post("/contractors/", authenticate, (req, res) => {
-  Models.createNew("Contractor", req.user._id, (doc, e) => {
-    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
-  });
-});
-
-// PATCH
-app.patch("/contractors/:id", authenticate, (req, res) => {
-  Models.updateById(
-    "Contractors",
-    req.params._id,
-    req.body,
-    req.user._id,
-    (doc, e) => {
-      res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
-    }
-  );
-});
-
-// DELETE
-app.delete("/contractors/:id", authenticate, (req, res) =>
-  Models.deleteById("Contractor", req.params._id, req.user._id, (doc, e) => {
-    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
-  })
-);
-
-// Specs
-// GET
-app.get("/specs", authenticate, (req, res) => {
-  Models.getAll("Spec", req.user._id, (doc, e) => {
-    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
-  });
-});
-
-app.get("/specs/:id", authenticate, (req, res) =>
-  Models.getById("Spec", req.params.id, req.user._id, (doc, e) => {
-    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
-  })
-);
-
-// POST
-app.post("/specs/", authenticate, (req, res) => {
-  Models.createNew("Spec", req.user._id, (doc, e) => {
-    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
-  });
-});
-
-app.patch("/specs/:id", authenticate, (req, res) => {
-  Models.updateById(
-    "Spec",
-    req.params._id,
-    req.body,
-    req.user._id,
-    (doc, e) => {
-      res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
-    }
-  );
-});
-
-app.delete("/specs/:id", authenticate, (req, res) => {
-  Models.deleteById("Spec", req.params._id, req.user._id, (doc, e) => {
-    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
-  });
-});
-
-// System Routes
-// Get
-app.get("/systems", authenticate, (req, res) => {
-  Models.getAll("System", req.user._id, (doc, e) => {
-    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
-  });
-});
-
-app.get("/systems/:id", authenticate, (req, res) => {
-  Models.getById("System", req.params.id, req.user._id, (doc, e) => {
-    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
-  });
-});
-
-// Post
-app.post("/systems", authenticate, (req, res) => {
-  Models.createNew("System", req.user._id, (doc, e) => {
-    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
-  });
-});
-
-// Patch
-app.patch("/systems/:id", authenticate, (req, res) => {
-  Models.updateById(
-    "System",
-    req.params._id,
-    req.body,
-    req.user._id,
-    (doc, e) => {
-      res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
-    }
-  );
-});
-
-// Delete
-app.delete("/systems/:id", authenticate, (req, res) => {
-  Models.deleteById("System", req.params._id, req.user._id, (doc, e) => {
-    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
-  });
 });
 
 app.listen(process.env.PORT, () =>

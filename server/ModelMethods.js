@@ -20,8 +20,8 @@ const pickProps = (model, props) => {
   );
 };
 
-Models.createNew = (model, usrId, callBack) => {
-  new Models[model]({ _creator: usrId })
+Models.createNew = (model, props, usrId, callBack) => {
+  new Models[model](_.extend(pickProps(model, props), { _creator: usrId }))
     .save()
     .then(doc => callBack(doc, null), e => callBack(null, e));
 };
@@ -42,10 +42,10 @@ Models.updateById = (model, id, props, usrId, callBack) => {
   Models[model]
     .findOneAndUpdate(
       { _creator: usrId, _id: id },
-      { $set: pickProps(props) },
+      { $set: pickProps(model, props) },
       { new: true }
     )
-    .then(doc => callBack(doc, null), e => callBack(nulle));
+    .then(doc => callBack(doc, null), e => callBack(null));
 };
 
 Models.deleteById = (model, id, usrId, callBack) => {

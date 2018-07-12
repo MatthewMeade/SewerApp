@@ -72,7 +72,7 @@ $.widget("app.clientModal", {
     $.ajax({
       url: "/clients/" + this.id,
       success: res => {
-        this.data = res.client;
+        this.data = res.doc;
       },
       async: false
     });

@@ -41,7 +41,7 @@ $.widget("app.specsPanel", {
       $.ajax({
         url: "/file/info/" + spec.file,
         success: res => {
-          fileName = res.upload.uploadName;
+          fileName = res.doc.uploadName;
         },
         async: false
       });

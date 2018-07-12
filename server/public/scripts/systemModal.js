@@ -72,7 +72,7 @@ $.widget("app.systemModal", {
     $.ajax({
       url: "/systems/" + this.id,
       success: res => {
-        this.data = res.system;
+        this.data = res.doc;
       },
       async: false
     });
@@ -112,7 +112,7 @@ $.widget("app.systemModal", {
       url: "/systems/",
       method: "POST",
       success: res => {
-        this.id = res._id;
+        this.id = res.doc._id;
         callback();
       }
     });

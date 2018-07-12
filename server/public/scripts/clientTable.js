@@ -2,7 +2,7 @@ $(document).ready(() => {
   $("#clientsTable").bootstrapTable({
     url: "/clients",
     responseHandler: function(res) {
-      res.clients.forEach(c => {
+      res.doc.forEach(c => {
         c.id = c._index;
         c.fullName = c.firstName + " " + c.lastName;
       });

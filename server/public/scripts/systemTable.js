@@ -2,7 +2,7 @@ $(document).ready(() => {
   $("#systemsTable").bootstrapTable({
     url: "/systems",
     responseHandler: function(res) {
-      return res.systems;
+      return res.doc;
     },
     striped: true,
     search: true,

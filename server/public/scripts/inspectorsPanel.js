@@ -12,6 +12,11 @@ $.widget("app.inspectorsPanel", {
 
   buildRowHTML() {
     this.body.empty();
+
+    if (!this.data) {
+      return;
+    }
+
     this.data.forEach(inspector => {
       var row = $(`<div class="inspectorListItem">
         <span class="inspectorName">${inspector.name}</span>
@@ -40,7 +45,7 @@ $.widget("app.inspectorsPanel", {
     $.ajax({
       url: "/inspectors/",
       success: res => {
-        this.data = res.inspector;
+        this.data = res.doc;
       },
       async: false
     });
