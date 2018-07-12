@@ -2,7 +2,6 @@ require("../../config/config.js");
 
 const { mongoose } = require("../../db/mongoose.js");
 const { Client } = require("../../models/client.js");
-const autoIncrement = require("mongoose-auto-increment");
 const fs = require("fs");
 
 Client.collection.drop(addNewClients);

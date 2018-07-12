@@ -44,7 +44,7 @@ app.get("/loginPage", (req, res) => {
     return res.render("login.hbs", {});
   }
 
-  User.findByToken(token)
+  Models.User.findByToken(token)
     .then(user => {
       if (user) {
         res.redirect("/");
@@ -60,7 +60,7 @@ app.get("/loginPage", (req, res) => {
 app.post("/users", (req, res) => {
   var body = _.pick(req.body, ["password"]);
 
-  var user = new User(body);
+  var user = new Models.User(body);
 
   user
     .save()
@@ -82,7 +82,7 @@ app.get("/users/me", authenticate, (req, res) => {
 app.post("/users/login", (req, res) => {
   var body = _.pick(req.body, "password");
 
-  User.findByCredentials(body.password)
+  Models.User.findByCredentials(body.password)
     .then(user => {
       return user.generateAuthToken().then(token => {
         res.cookie("token", token);
@@ -234,178 +234,158 @@ app.get("/inspectors", authenticate, (req, res) => {
   });
 });
 
+app.get("/inspectors/:id", authenticate, (req, res) => {
+  Models.getById("Inspector", req.params.id, req.user._id, (doc, e) => {
+    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
+  });
+});
+
 // POST
 app.post("/inspectors", authenticate, (req, res) => {
-  var inspector = new Inspector({
-    _creator: req.user._id,
-    name: req.body.name
+  Models.createNew("Inspector", req.user._id, (doc, e) => {
+    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
   });
-
-  inspector.save().then(
-    doc => {
-      res.send({ doc });
-    },
-    e => {
-      res.status(400).send(e);
-    }
-  );
 });
 
 // PATCH
 app.patch("/inspectors/:id", authenticate, (req, res) => {
-  var id = req.params.id;
-  var body = { name: req.body.name };
-
-  if (!ObjectID.isValid(id)) {
-    return res.status(404).send();
-  }
-
-  Inspector.findOneAndUpdate(
-    {
-      _id: id,
-      _creator: req.user._id
-    },
-    {
-      $set: body
-    },
-    {
-      new: true
+  Models.updateById(
+    "Inspector",
+    req.params._id,
+    req.body,
+    req.user._id,
+    (doc, e) => {
+      res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
     }
-  )
-    .then(inspector => {
-      if (!inspector) {
-        return res.status(400).send();
-      }
-
-      res.send({ inspector });
-    })
-    .catch(e => res.status(400).send(e));
+  );
 });
 
 // DELETE
 app.delete("/inspectors/:id", authenticate, (req, res) => {
-  var id = req.params.id;
-
-  if (!ObjectID.isValid(id)) {
-    return res.status(404).send();
-  }
-
-  Inspector.findOneAndRemove({
-    _id: id,
-    _creator: req.user._id
-  })
-    .then(inspector => {
-      if (!inspector) {
-        return res.status(404).send();
-      }
-      res.send({ inspector });
-    })
-    .catch(e => {
-      res.status(400).send(e);
-    });
+  Models.deleteById("Delete", req.params._id, req.user._id, (doc, e) => {
+    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
+  });
 });
 
 // Contractor
 // GET
-app.get("/contractors", authenticate, (req, res) =>
-  RouteMethods.getAll(req, res, Contractor)
-);
+app.get("/contractors", authenticate, (req, res) => {
+  Models.getAll("Contractor", req.user._id, (doc, e) => {
+    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
+  });
+});
 
 app.get("/contractors/:id", authenticate, (req, res) =>
-  RouteMethods.getById(req, res, Contractor)
+  Models.getById("Contractor", req.params.id, req.user._id, (doc, e) => {
+    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
+  })
 );
 
 // POST
 app.post("/contractors/", authenticate, (req, res) => {
-  var props = {
-    name: req.body.name
-  };
-  RouteMethods.postWithProps(req, res, Contractor, props);
+  Models.createNew("Contractor", req.user._id, (doc, e) => {
+    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
+  });
 });
 
 // PATCH
 app.patch("/contractors/:id", authenticate, (req, res) => {
-  var props = _.pick(
+  Models.updateById(
+    "Contractors",
+    req.params._id,
     req.body,
-    Object.keys(mongoose.model("Contractor").schema.obj).filter(
-      k => k[0] !== "_"
-    )
+    req.user._id,
+    (doc, e) => {
+      res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
+    }
   );
-
-  console.log(props);
-
-  RouteMethods.patchProps(req, res, Contractor, props);
 });
 
 // DELETE
 app.delete("/contractors/:id", authenticate, (req, res) =>
-  RouteMethods.deleteById(req, res, Contractor)
+  Models.deleteById("Contractor", req.params._id, req.user._id, (doc, e) => {
+    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
+  })
 );
 
 // Specs
 // GET
-app.get("/specs", authenticate, (req, res) =>
-  RouteMethods.getAll(req, res, Spec)
-);
+app.get("/specs", authenticate, (req, res) => {
+  Models.getAll("Spec", req.user._id, (doc, e) => {
+    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
+  });
+});
+
 app.get("/specs/:id", authenticate, (req, res) =>
-  RouteMethods.getById(req, res, Spec)
+  Models.getById("Spec", req.params.id, req.user._id, (doc, e) => {
+    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
+  })
 );
 
 // POST
 app.post("/specs/", authenticate, (req, res) => {
-  var props = {
-    name: req.body.name,
-    file: req.body.file
-  };
-  RouteMethods.postWithProps(req, res, Spec, props);
+  Models.createNew("Spec", req.user._id, (doc, e) => {
+    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
+  });
 });
 
 app.patch("/specs/:id", authenticate, (req, res) => {
-  var props = _.pick(
+  Models.updateById(
+    "Spec",
+    req.params._id,
     req.body,
-    Object.keys(mongoose.model("Spec").schema.obj).filter(k => k[0] !== "_")
+    req.user._id,
+    (doc, e) => {
+      res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
+    }
   );
-
-  RouteMethods.patchProps(req, res, Spec, props);
 });
 
-app.delete("/specs/:id", authenticate, (req, res) =>
-  RouteMethods.deleteById(req, res, Spec)
-);
+app.delete("/specs/:id", authenticate, (req, res) => {
+  Models.deleteById("Spec", req.params._id, req.user._id, (doc, e) => {
+    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
+  });
+});
 
 // System Routes
 // Get
 app.get("/systems", authenticate, (req, res) => {
-  RouteMethods.getAll(req, res, System);
+  Models.getAll("System", req.user._id, (doc, e) => {
+    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
+  });
 });
 
 app.get("/systems/:id", authenticate, (req, res) => {
-  RouteMethods.getById(req, res, System);
+  Models.getById("System", req.params.id, req.user._id, (doc, e) => {
+    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
+  });
 });
 
 // Post
 app.post("/systems", authenticate, (req, res) => {
-  RouteMethods.postWithProps(req, res, System, {});
+  Models.createNew("System", req.user._id, (doc, e) => {
+    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
+  });
 });
 
 // Patch
 app.patch("/systems/:id", authenticate, (req, res) => {
-  for (key in req.body) {
-    req.body[key] = JSON.parse(req.body[key]);
-  }
-  var props = _.pick(
+  Models.updateById(
+    "System",
+    req.params._id,
     req.body,
-    Object.keys(mongoose.model("System").schema.obj).filter(k => k[0] !== "_")
+    req.user._id,
+    (doc, e) => {
+      res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
+    }
   );
-
-  console.log("Request body: " + JSON.stringify(req.body));
-  console.log("Picked Props: " + JSON.stringify(props));
-  RouteMethods.patchProps(req, res, System, props);
 });
 
 // Delete
 app.delete("/systems/:id", authenticate, (req, res) => {
-  RouteMethods.deleteById(req, res, System);
+  Models.deleteById("System", req.params._id, req.user._id, (doc, e) => {
+    res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
+  });
 });
 
 app.listen(process.env.PORT, () =>

@@ -4,3 +4,6 @@ server/config/config.json
 files/
 TODO.todo
 /server/uploads
+.vagrant
+*.log
+Vagrantfile
