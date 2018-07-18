@@ -2,7 +2,7 @@ $.widget("app.systemModal", {
   _init: function() {
     this.options = {
       keyValueLabels: {
-        firstName: "First Name",
+        _id: "ID",
         lastName: "Last Name",
         title: "Title",
         email: "Email",
@@ -78,12 +78,12 @@ $.widget("app.systemModal", {
     });
 
     this.infoBody.find(".systemInfoPair").remove();
-    for (key in this.options.keyValueLabels) {
+    for (key in this.data) {
       this.infoBody.append(`
             <div class='systemInfoPair col-lg-4 col-md-6'>
-              <label>${
-                this.options.keyValueLabels[key]
-              }: </label> <span id='system${key}'>${this.data[key]}</span>
+              <label>${key}: </label> <span id='system${key}'>${
+        this.data[key]
+      }</span>
             </div>`);
     }
 
@@ -93,7 +93,7 @@ $.widget("app.systemModal", {
         .val(this.data[key]);
     }
 
-    this.title.text(this.data.firstName + " " + this.data.lastName);
+    this.title.text(this.data._id);
   },
 
   openEdit: function() {

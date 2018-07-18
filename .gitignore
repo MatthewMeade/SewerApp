@@ -7,3 +7,4 @@ TODO.todo
 .vagrant
 *.log
 Vagrantfile
+server/public/styles/compiled/*

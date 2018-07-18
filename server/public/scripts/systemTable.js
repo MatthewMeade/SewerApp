@@ -46,6 +46,6 @@ $(document).ready(() => {
   )
     .prependTo("#systems .fixed-table-toolbar .columns")
     .click(() => {
-      $("#systemModal").systemModal("open");
+      $("#systemModal").systemModal("open", undefined);
     });
 });

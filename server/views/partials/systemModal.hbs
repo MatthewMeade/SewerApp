@@ -5,35 +5,40 @@
                 <h5 class="modal-title">Modal title</h5>
                 <button type="button" class="close" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                  </button>
+                </button>
             </div>
             <div id='systemModalBody' class="modal-body container-fluid">
 
                 <div class='row systemInfo clearfix '>
                     {{!--
-                    <h2 class='col-12'>System Info: </h2><br /> --}}
+                    <h2 class='col-12'>System Info: </h2>
+                    <br /> --}}
                 </div>
                 <div class="systemFormContainer container-fluid">
                     <form id="systemForm" class='row'>
-                        <h3>Edit System <a class="fas fa-trash-alt fa-xs deleteBtn" id="systemDeleteButton"></a></h3>
+                        <h3>Edit System
+                            <a class="fas fa-trash-alt fa-xs deleteBtn" id="systemDeleteButton"></a>
+                        </h3>
                         <div class='col-lg-6'>
                             <div class="form-group">
-                                <legend id="systemNameLegend"><i class="fas fa-id-card"></i> System Name</legend>
+                                <legend id="systemNameLegend">
+                                    <i class="fas fa-id-card"></i> People</legend>
 
-                                <label for="systemFirstName" class="">First Name</label>
+                                <label for="systemClient" class="">Client</label>
                                 <input type="text" class="form-control " id="systemFirstName" placeholder="Eg: Matthew" name='firstName'>
 
-                                <label for="systemLastName" class="">Last Name</label>
+                                <label for="systemLastName" class="">Inspector</label>
                                 <input type="text" class="form-control " id="systemLastName" placeholder="Eg: Meade" name='lastName'>
 
-                                <label for="systemTitle" class="">Title</label>
+                                <label for="systemTitle" class="">Contractor</label>
                                 <input type="text" class="form-control " id="systemTitle" placeholder="Eg: Mr" name='title'>
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <legend id="systemInfoLegend"><i class="fas fa-phone fa-xs"></i> Contact Info</i>
+                                <legend id="systemInfoLegend">
+                                    <i class="fas fa-phone fa-xs"></i>Report</i>
                                 </legend>
 
                                 <label for="systemEmail" class="">Email</label>
@@ -51,17 +56,18 @@
 
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <legend id="systemMailLegend"><i class="fas fa-envelope"></i> Mailing Info</i>
+                                <legend id="systemMailLegend">
+                                    <i class="fas fa-envelope"></i>Lot</i>
                                 </legend>
 
-                                <label for="systemstreetAddress" class="">Street</label>
+                                <label for="systemstreetAddress" class="">Municipality</label>
                                 <input type="text" class="form-control " id="systemstreetAddress" placeholder="Eg: 1 Main Street" name='streetAddress'>
 
 
-                                <label for="systemCity" class="">City</label>
+                                <label for="systemCity" class="">Lat</label>
                                 <input type="text" class="form-control " id="systemCity" placeholder="Eg: St. John's" name='city'>
 
-                                <label for="systemProvince" class="">Province</label>
+                                <label for="systemProvince" class="">Long</label>
                                 <input type="text" class="form-control " id="systemProvince" placeholder="Eg: NL" name='province'>
 
                                 <label for="systemPostCode" class="">Postal Code</label>
@@ -72,7 +78,8 @@
 
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <legend id="systemNotesLegend"><i class="fas fa-sticky-note"></i> Notes</i>
+                                <legend id="systemNotesLegend">
+                                    <i class="fas fa-sticky-note"></i> Notes</i>
                                 </legend>
 
                                 <textarea name="notes" id="systemNotes" placeholder="Enter other relevant system information"></textarea>
@@ -84,7 +91,8 @@
                 </div>
             </div>
             <div class=" modal-footer ">
-                {{!-- <button type="button " class="btn btn-secondary closeBtn ">Close</button> --}}
+                {{!--
+                <button type="button " class="btn btn-secondary closeBtn ">Close</button> --}}
                 <button type="button " class="btn btn-secondary editBtn ">Edit</button>
 
                 <button type="button " class="btn btn-primary saveBtn">Save changes</button>

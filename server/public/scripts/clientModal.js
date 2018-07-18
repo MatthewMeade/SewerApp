@@ -113,7 +113,7 @@ $.widget("app.clientModal", {
       url: "/clients/",
       method: "POST",
       success: res => {
-        id = res._id;
+        id = res.doc._id;
       },
       async: false
     });

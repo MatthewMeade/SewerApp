@@ -7,7 +7,7 @@ $(document).ready(() => {
         c.fullName = c.firstName + " " + c.lastName;
       });
 
-      return res.clients;
+      return res.doc;
     },
     striped: true,
     search: true,
