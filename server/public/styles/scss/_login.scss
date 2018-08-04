@@ -1,0 +1,79 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#header {
+  width: 100%;
+  height: 20px;
+  background-color: $primary;
+  padding: 10px;
+
+  #title {
+    color: $white;
+    font-family: $headingFont;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+  }
+}
+
+#loginHeader {
+  font-family: $headingFont;
+  text-align: center;
+  color: $primary;
+  font-size: 4em;
+  margin-top: 20vh;
+}
+
+#passwordField {
+  button {
+    background-color: $green;
+    color: $white;
+    border-color: $white;
+    font-weight: bold;
+    padding: 0;
+  }
+}
+
+#passwordError {
+  border: 2px solid $white;
+  height: 60px;
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 2px;
+  font-family: $textFont;
+  color: $white;
+  background-color: $red;
+  font-weight: bold;
+  display: none;
+
+  @media (max-width: 450px) {
+    padding: 0;
+  }
+
+  svg {
+    margin: 10px;
+    float: left;
+
+    @media (max-width: 400px) {
+      display: none;
+    }
+  }
+
+  span {
+    display: block;
+    width: 100%;
+    text-align: center;
+
+    @media (max-width: 600px) {
+      font-size: 16px;
+      margin-top: 4px;
+    }
+  }
+}
+
+#passwordError.active {
+  display: block;
+}

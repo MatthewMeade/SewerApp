@@ -15,12 +15,7 @@ const Models = require("./ModelMethods.js");
 
 var app = express();
 
-hbs.registerPartials(__dirname + "/views/partials");
-hbs.registerHelper("getCurrentYear", () => {
-  return new Date().getFullYear();
-});
-
-app.set("view engine", "hbs");
+app.set("view engine", "pug");
 app.set("views", __dirname + "/views");
 
 app.use(express.static(__dirname + "/public"));
@@ -39,7 +34,7 @@ app.get("/loginPage", (req, res) => {
   var token = req.cookies.token;
 
   if (!token) {
-    return res.render("login.hbs", {});
+    return res.render("login.pug", {});
   }
 
   Models.User.findByToken(token)
