@@ -11,11 +11,13 @@ html
 
             #passwordField
                 .row
-                    input(type='password' placeholder="Password...").eight.columns.offset-by-two
+                    input(type='password' placeholder="Password...")#passwordInput.eight.columns.offset-by-two
                 .row
-                    button(value='submit').four.columns.offset-by-four Enter
+                    button#loginButton(value='submit').four.columns.offset-by-four Enter
 
             .row
-                #passwordError.eight.columns.offset-by-two
+                #warningBox.eight.columns.offset-by-two
                     i.fas.fa-exclamation-triangle
                     span The password you entered was incorrect
+
+        script(src="./scripts/loginScreen.js")    

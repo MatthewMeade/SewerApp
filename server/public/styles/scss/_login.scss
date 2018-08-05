@@ -37,7 +37,7 @@ body {
   }
 }
 
-#passwordError {
+#warningBox {
   border: 2px solid $white;
   height: 60px;
   font-size: 20px;
@@ -47,33 +47,26 @@ body {
   color: $white;
   background-color: $red;
   font-weight: bold;
-  display: none;
+  opacity: 0;
+
+  transition: opacity 1s;
 
   @media (max-width: 450px) {
     padding: 0;
   }
 
-  svg {
-    margin: 10px;
-    float: left;
+  text-align: center;
 
-    @media (max-width: 400px) {
-      display: none;
-    }
+  svg {
+    margin-right: 10px;
   }
 
-  span {
-    display: block;
-    width: 100%;
-    text-align: center;
-
-    @media (max-width: 600px) {
-      font-size: 16px;
-      margin-top: 4px;
-    }
+  @media (max-width: 600px) {
+    font-size: 16px;
+    margin-top: 4px;
   }
 }
 
-#passwordError.active {
-  display: block;
+#warningBox.active {
+  opacity: 1;
 }

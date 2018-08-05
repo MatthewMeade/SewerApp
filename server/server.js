@@ -4,7 +4,6 @@ const _ = require("lodash");
 const express = require("express");
 const bodyParser = require("body-parser");
 const { ObjectID } = require("mongodb");
-const hbs = require("hbs");
 const cookieParser = require("cookie-parser");
 const multer = require("multer");
 const md5 = require("md5");
@@ -21,12 +20,12 @@ app.set("views", __dirname + "/views");
 app.use(express.static(__dirname + "/public"));
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({ type: "application/json" }));
 
 app.use(cookieParser());
 
 app.get("/", authenticate, (req, res) => {
-  res.render("index.hbs", {});
+  res.render("index.pug", {});
 });
 
 app.get("/loginPage", (req, res) => {
@@ -74,6 +73,8 @@ app.get("/users/me", authenticate, (req, res) => {
 
 app.post("/users/login", (req, res) => {
   var body = _.pick(req.body, "password");
+
+  console.log("LOGIN REQUESTED", body);
 
   Models.User.findByCredentials(body.password)
     .then(user => {
