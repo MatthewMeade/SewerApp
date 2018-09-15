@@ -1,0 +1,42 @@
+fields:
+  firstName:
+    type: String
+    label: First Name
+  lastName:
+    type: String
+    label: Last Name
+  title:
+    type: String
+    label: Title
+  email:
+    type: String
+    label: Email
+  homePhone:
+    type: String
+    label: Home Phone
+  mobilePhone:
+    type: String
+    label: Mobile Phone
+  streetAddress:
+    type: String
+    label: Street Address
+  city:
+    type: String
+    label: City
+  province:
+    type: String
+    label: Province
+    default: NL
+  postCode:
+    type: String
+    label: Postal Code
+  notes:
+    type: LongString
+    label: Notes
+
+defaultTableHeadings:
+  - firstName
+  - lastName
+  - email
+  - homePhone
+  - city

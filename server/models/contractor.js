@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 
-var contractoSchema = new mongoose.Schema({
+var contractorSchema = new mongoose.Schema({
   name: String,
   _creator: {
     type: mongoose.Schema.Types.ObjectId,
@@ -8,6 +8,6 @@ var contractoSchema = new mongoose.Schema({
   }
 });
 
-var Contractor = mongoose.model("Contractor", contractoSchema);
+var Contractor = mongoose.model("Contractor", contractorSchema);
 
 module.exports = { Contractor };

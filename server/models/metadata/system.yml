@@ -1,4 +1,4 @@
-Fields:
+fields:
   client:
     type: ClientObject
     label: Client
@@ -169,7 +169,7 @@ Fields:
     data:
       type: SpecObject
 
-DefaultTableHeadings:
+defaultTableHeadings:
   - testPitDate
   - client
   - municipality

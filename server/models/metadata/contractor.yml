@@ -1,0 +1,8 @@
+fields:
+  name:
+    type: String
+    label: Name
+
+defaultTableHeadings:
+  - name
+u

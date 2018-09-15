@@ -1,0 +1,11 @@
+fields:
+  name:
+    type: String
+    label: Spec Name
+  file:
+    type: File
+    label: File
+
+defaultTableHeadings:
+  - name
+  - file
