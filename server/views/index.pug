@@ -2,4 +2,33 @@ doctype html
 html
     include includes/head.pug
     body
-    
+        nav
+            h1 Kenny Meade Septic Design
+            ul
+                li.active Home
+                li Systems
+                li Clients
+                li Invoices
+                li Analytics
+                li Settings
+
+    #tabs
+        #homeTab.active
+            h2 Home
+
+        #systemsTab
+            h2 Systems
+
+        #clientsTab
+            h2 Clients
+
+        #invoicesTab
+            h2 Invoices
+
+        #analyticsTab
+            h2 Analytics
+
+        #settingsTab
+            h2 Settings
+
+    include includes/footer.pug
