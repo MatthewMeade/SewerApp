@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 const multer = require("multer");
 const md5 = require("md5");
 const fs = require("fs");
+const yaml = require("js-yaml");
 
 const { authenticate } = require("./middleware/authenticate.js");
 const Models = require("./ModelMethods.js");
@@ -45,7 +46,7 @@ app.get("/loginPage", (req, res) => {
       }
     })
     .catch(e => {
-      res.render("login.hbs", {});
+      res.render("login.pug", {});
     });
 });
 
@@ -135,6 +136,17 @@ defaultRoutes.forEach(name => {
     Models.deleteById(name, req.params.id, req.user._id, (doc, e) => {
       res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
     });
+  });
+
+  // Get Metadata
+  app.get(`/metadata/${name}`, authenticate, (req, res) => {
+    var file = fs.readFileSync(
+      __dirname + `/models/metadata/${name}.yaml`,
+      "UTF-8"
+    );
+
+    var obj = yaml.load(file);
+    res.send(obj);
   });
 });
 
