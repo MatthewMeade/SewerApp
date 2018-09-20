@@ -50,7 +50,7 @@ fields:
   clientLetterDate:
     type: Date
     label: Cover Letter Date
-  inspectorLetterBody:
+  clientLetterBody:
     type: templateString
     label: Inspector Letter Body
 
@@ -176,5 +176,3 @@ defaultTableHeadings:
   - inspector
   - contractor
   - approved
-      
-  

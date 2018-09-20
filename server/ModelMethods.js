@@ -3,15 +3,8 @@ const { ObjectID } = require("mongodb");
 const { mongoose } = require("./db/mongoose.js");
 const _ = require("lodash");
 
-const Models = {};
-
-Models.System = require("./models/system.js").System;
-Models.Client = require("./models/client.js").Client;
-Models.User = require("./models/user.js").User;
-Models.Upload = require("./models/upload.js").Upload;
-Models.Contractor = require("./models/contractor.js").Contractor;
-Models.Inspector = require("./models/inspector.js").Inspector;
-Models.Spec = require("./models/spec.js").Spec;
+const Models = require("./models/DataModels.js");
+Models.modelNames = Object.keys(Models);
 
 const pickProps = (model, props) => {
   return _.pick(
