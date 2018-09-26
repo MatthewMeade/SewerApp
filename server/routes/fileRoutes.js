@@ -15,7 +15,6 @@ module.exports = app => {
 
     if (!fileExists) {
       fs.writeFile(path, file.buffer, err => {
-        console.log("HERE:", err);
         if (err) {
           return res.status(500).send({ err });
         }

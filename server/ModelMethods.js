@@ -3,36 +3,34 @@ const { ObjectID } = require("mongodb");
 const { mongoose } = require("./db/mongoose.js");
 const _ = require("lodash");
 
-const Models = require("./models/DataModels.js");
-Models.modelNames = Object.keys(Models);
+const models = global.models;
+const schemas = global.schemas;
+models.modelNames = Object.keys(schemas);
 
 const pickProps = (model, props) => {
-  return _.pick(
-    props,
-    Object.keys(mongoose.model(model).schema.obj).filter(k => k[0] !== "_")
-  );
+  return _.pick(props, Object.keys(schemas[model]).filter(k => k[0] !== "_"));
 };
 
-Models.createNew = (model, props, usrId, callBack) => {
-  new Models[model](_.extend(pickProps(model, props), { _creator: usrId }))
+models.createNew = (model, props, usrId, callBack) => {
+  new models[model](_.extend(pickProps(model, props), { _creator: usrId }))
     .save()
     .then(doc => callBack(doc, null), e => callBack(null, e));
 };
 
-Models.getAll = (model, usrId, callBack) => {
-  Models[model]
+models.getAll = (model, usrId, callBack) => {
+  models[model]
     .find({ _creator: usrId })
     .then(doc => callBack(doc, null), e => callBack(null, e));
 };
 
-Models.getById = (model, id, usrId, callBack) => {
-  Models[model]
+models.getById = (model, id, usrId, callBack) => {
+  models[model]
     .findOne({ _creator: usrId, _id: id })
     .then(doc => callBack(doc, null), e => callBack(null, e));
 };
 
-Models.updateById = (model, id, props, usrId, callBack) => {
-  Models[model]
+models.updateById = (model, id, props, usrId, callBack) => {
+  models[model]
     .findOneAndUpdate(
       { _creator: usrId, _id: id },
       { $set: pickProps(model, props) },
@@ -41,10 +39,10 @@ Models.updateById = (model, id, props, usrId, callBack) => {
     .then(doc => callBack(doc, null), e => callBack(null));
 };
 
-Models.deleteById = (model, id, usrId, callBack) => {
-  Models[model]
+models.deleteById = (model, id, usrId, callBack) => {
+  models[model]
     .findOneAndRemove({ _creator: usrId, _id: id })
     .then(doc => callBack(doc, null), e => callBack(null, e));
 };
 
-module.exports = Models;
+module.exports = models;

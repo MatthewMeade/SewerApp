@@ -7,14 +7,18 @@ const modelList = [
   "contractor",
   "inspector",
   "spec",
-  "system",
   "upload"
 ];
 
 const schemas = {};
+const models = {};
+global.tables = {};
+global.metaData = {};
 modelList.forEach(model => {
   const modelObj = modelLoader.load(model);
+  global.metaData[model] = modelLoader.loadMetadata(model);
   schemas[model] = new mongoose.Schema(modelObj);
+  models[model] = mongoose.model(model, schemas[model]);
 });
 
-module.exports = { schemas };
+module.exports = { models, schemas };

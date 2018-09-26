@@ -1,6 +1,6 @@
 const { authenticate } = require("../middleware/authenticate.js");
 
-const Models = require("../ModelMethods.js");
+const { User } = require("../models/user");
 
 module.exports = app => {
   app.get("/", authenticate, (req, res) => {
@@ -15,7 +15,7 @@ module.exports = app => {
       return res.render("login.pug", {});
     }
 
-    Models.User.findByToken(token)
+    User.findByToken(token)
       .then(user => {
         if (user) {
           res.redirect("/");

@@ -29,8 +29,6 @@ module.exports = app => {
   app.post("/users/login", (req, res) => {
     var body = _.pick(req.body, "password");
 
-    console.log("LOGIN REQUESTED", body);
-
     User.findByCredentials(body.password)
       .then(user => {
         return user.generateAuthToken().then(token => {

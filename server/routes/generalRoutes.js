@@ -1,5 +1,7 @@
 const { authenticate } = require("../middleware/authenticate.js");
 const yaml = require("js-yaml");
+const fs = require("fs");
+const resolve = require("path").resolve;
 
 const Models = require("../ModelMethods.js");
 
@@ -48,13 +50,7 @@ module.exports = app => {
 
     // Get Metadata
     app.get(`/metadata/${name}`, authenticate, (req, res) => {
-      var file = fs.readFileSync(
-        __dirname + `/models/metadata/${name}.yaml`,
-        "UTF-8"
-      );
-
-      var obj = yaml.load(file);
-      res.send(obj);
+      res.send(global.metaData[name]);
     });
   });
 };

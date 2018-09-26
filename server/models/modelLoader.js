@@ -4,6 +4,15 @@ var mongoose = require("mongoose");
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
+module.exports.loadMetadata = modelName => {
+  let file = fs.readFileSync(
+    __dirname + "/metadata/" + modelName + ".yml",
+    "UTF-8"
+  );
+
+  return yml.load(file);
+};
+
 module.exports.load = modelName => {
   let file = fs.readFileSync(
     __dirname + "/metadata/" + modelName + ".yml",
@@ -71,4 +80,13 @@ module.exports.load = modelName => {
   };
 
   return model;
+};
+
+module.exports.loadTable = modelName => {
+  let file = fs.readFileSync(
+    __dirname + "/metadata/" + modelName + ".yml",
+    "UTF-8"
+  );
+
+  return yml.load(file).defaultTableHeadings;
 };

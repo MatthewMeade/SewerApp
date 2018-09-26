@@ -4,6 +4,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
+const { models, schemas } = require("./models/DataModels");
+global.models = models;
+global.schemas = schemas;
+
 const fileRoutes = require("./routes/fileRoutes");
 const generalRoutes = require("./routes/generalRoutes");
 const pageRoutes = require("./routes/pageRoutes");
