@@ -168,6 +168,7 @@ fields:
     label: Specs
     data:
       type: SpecObject
+      label: Spec
 
 defaultTableHeadings:
   - testPitDate

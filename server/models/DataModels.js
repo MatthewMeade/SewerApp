@@ -7,7 +7,8 @@ const modelList = [
   "contractor",
   "inspector",
   "spec",
-  "upload"
+  "upload",
+  "invoice"
 ];
 
 const schemas = {};

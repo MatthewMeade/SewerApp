@@ -22,7 +22,7 @@ nav {
 
   h1 {
     line-height: 40px;
-    margin: 0 5px;
+    margin: 0 calc(0.75vw + 5px);
     float: left;
     font-size: 20px;
     vertical-align: middle;
@@ -68,12 +68,14 @@ nav {
 
   overflow: auto;
 
-  width: 99.75%;
-  min-height: calc(100vh - 65px);
+  width: 98.5vw;
+  min-height: calc(99vh - 65px);
 
-  margin: 0 auto;
+  margin: 0.5vw auto;
   border-radius: 5px 5px 0 0;
-  background-color: #eee;
+  background-color: #efefef;
+
+  padding: 5px;
 }
 
 #logout {
@@ -90,4 +92,8 @@ nav {
     color: $white;
     background-color: darken($color: $red, $amount: 10%);
   }
+}
+
+.tab {
+  // padding: 20px;
 }

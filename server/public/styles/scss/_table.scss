@@ -1,0 +1,93 @@
+.tableTab {
+  .tableHeading {
+    h2 {
+      display: inline-block;
+      font-weight: normal;
+      font-size: 2em;
+      margin: 10px 20px 20px 20px;
+      text-transform: capitalize;
+      min-width: 10%;
+    }
+
+    input {
+      font-size: 1.25em;
+      border-radius: 10px;
+
+      padding: 5px;
+      width: 33%;
+
+      border: none;
+    }
+
+    button {
+      float: right;
+      margin: 15px;
+      font-size: 1.1em;
+      padding: 5px 10px;
+
+      border: 2px solid $primary;
+      background-color: $primary;
+      border-radius: 10px;
+      color: white;
+      text-transform: capitalize;
+
+      transition: background-color 0.1s transform 0.1s;
+
+      &:hover {
+        background-color: lighten($primary, 5);
+      }
+
+      &:active {
+        background-color: darken($primary, 5);
+        transform: scale(0.95);
+      }
+    }
+  }
+  table {
+    border-collapse: collapse;
+    table-layout: fixed;
+
+    width: 100%;
+    margin: 0 auto;
+
+    thead {
+      background-color: #fff;
+
+      th {
+        height: 30px;
+        text-align: left;
+        padding: 5px;
+
+        font-weight: lighter;
+
+        border-top: 1px solid grey;
+        border-bottom: 1px solid grey;
+
+        transition: background-color 0.5s;
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.05);
+        }
+      }
+    }
+
+    tbody {
+      background-color: white;
+
+      tr {
+        &:nth-child(2n - 1) {
+          background-color: rgba(0, 112, 210, 0.05);
+        }
+
+        &:hover {
+          background-color: rgba(0, 112, 210, 0.1);
+        }
+      }
+
+      td {
+        padding: 5px;
+        height: 30px;
+      }
+    }
+  }
+}

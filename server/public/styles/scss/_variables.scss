@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Rajdhani");
+
 $primary: #0070d2;
 $red: #d91f16;
 $green: #5bc553;
@@ -5,4 +7,8 @@ $black: #242424;
 $white: #efefef;
 
 $headingFont: "Open Sans", sans-serif;
-$textFont: Arial, Helvetica, sans-serif;
+$textFont: "Tahoma", sans-serif;
+
+* {
+  font-family: $textFont;
+}

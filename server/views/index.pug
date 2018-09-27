@@ -14,23 +14,21 @@ html
                 li.logout#logout Log Out
 
     #tabs
-        #homeTab.active
+        #homeTab.active.tab
 
-        #systemsTab
-            h2 Systems
+        #systemsTab.tab
             include includes/table.pug
 
+        #clientsTab.tab
+            include includes/table.pug
 
-        #clientsTab
-            h2 Clients
+        #invoicesTab.tab
+            include includes/table.pug
 
-        #invoicesTab
-            h2 Invoices
-
-        #analyticsTab
+        #analyticsTab.tab
             h2 Analytics
 
-        #settingsTab
+        #settingsTab.tab
             h2 Settings
 
     include includes/footer.pug

@@ -1,0 +1,39 @@
+fields:
+  client:
+    type: ClientObject
+    label: Client
+  date:
+    type: Date
+    label: Invoice Date
+  paid:
+    type: Boolean
+    label: Paid
+  systems:
+    type: ObjectArray
+    label: Systems
+    data:
+      systemID:
+        type: SystemObject
+        label: System ID
+      price:
+        type: Number
+        label: Price
+  others:
+    type: ObjectArray
+    label: Other Items
+    data:
+      name:
+        type: String
+        label: Item Name
+      price:
+        type: Number
+        label: Item Price
+  totalAmount:
+    type: Number
+    label: Total Amount
+
+defaultTableHeadings:
+  - client
+  - date
+  - totalAmount
+  - paid
