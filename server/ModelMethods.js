@@ -1,6 +1,5 @@
 const { ObjectID } = require("mongodb");
 
-const { mongoose } = require("./db/mongoose.js");
 const _ = require("lodash");
 
 const models = global.models;
@@ -8,10 +7,14 @@ const schemas = global.schemas;
 models.modelNames = Object.keys(schemas);
 
 const pickProps = (model, props) => {
-  return _.pick(props, Object.keys(schemas[model]).filter(k => k[0] !== "_"));
+  return _.pick(
+    props,
+    Object.keys(metaData[model].fields).filter(k => k[0] !== "_")
+  );
 };
 
 models.createNew = (model, props, usrId, callBack) => {
+  console.log("creating new " + model);
   new models[model](_.extend(pickProps(model, props), { _creator: usrId }))
     .save()
     .then(doc => callBack(doc, null), e => callBack(null, e));

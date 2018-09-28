@@ -3,6 +3,7 @@ require("./config/config.js");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const { mongoose } = require("./db/mongoose.js");
 
 const { models, schemas } = require("./models/DataModels");
 global.models = models;
@@ -12,6 +13,7 @@ const fileRoutes = require("./routes/fileRoutes");
 const generalRoutes = require("./routes/generalRoutes");
 const pageRoutes = require("./routes/pageRoutes");
 const userRoutes = require("./routes/userRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 const app = express();
 
@@ -28,6 +30,7 @@ app.use(cookieParser());
 fileRoutes(app);
 generalRoutes(app);
 pageRoutes(app);
+adminRoutes(app);
 userRoutes(app);
 
 app.listen(process.env.PORT, () =>
