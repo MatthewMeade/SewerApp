@@ -14,15 +14,32 @@ const pickProps = (model, props) => {
 };
 
 models.createNew = (model, props, usrId, callBack) => {
-  console.log("creating new " + model);
   new models[model](_.extend(pickProps(model, props), { _creator: usrId }))
     .save()
     .then(doc => callBack(doc, null), e => callBack(null, e));
 };
 
-models.getAll = (model, usrId, callBack) => {
+models.getAll = (model, fields, usrId, callBack) => {
+  console.log(fields);
   models[model]
-    .find({ _creator: usrId })
+    .find(
+      { _creator: usrId },
+      fields
+        ? fields.split(",").reduce(
+            (a, c) => {
+              a[c] = 1;
+              return a;
+            },
+            { _id: 1 }
+          )
+        : undefined
+    )
+    .then(doc => callBack(doc, null), e => callBack(null, e));
+};
+
+models.getAllFiltered = (model, props, userID, callBack) => {
+  models[model]
+    .find(_.extend(props, { _creator: userID }))
     .then(doc => callBack(doc, null), e => callBack(null, e));
 };
 

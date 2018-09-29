@@ -9,7 +9,7 @@ module.exports = app => {
   Models.modelNames.forEach(name => {
     // Get All
     app.get(`/${name}s`, authenticate, (req, res) => {
-      Models.getAll(name, req.user._id, (doc, e) => {
+      Models.getAll(name, req.query.fields, req.user._id, (doc, e) => {
         res.status(doc ? 200 : 400).send(doc ? { doc } : { e });
       });
     });
@@ -49,7 +49,7 @@ module.exports = app => {
     });
 
     // Get Metadata
-    app.get(`/metadata/${name}`, authenticate, (req, res) => {
+    app.get(`/metadata/${name}s`, authenticate, (req, res) => {
       res.send(global.metaData[name]);
     });
   });

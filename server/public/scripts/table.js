@@ -6,7 +6,38 @@ class Table {
     this.getData();
   }
 
-  populateTable() {
+  populateTable(data) {
+    let bodyString = "";
+    data.forEach(item => {
+      bodyString += "<tr>";
+      this.metaData.defaultTableHeadings.forEach(heading => {
+        bodyString += `<td>${this.format(item[heading], heading)}</td>`;
+      });
+      bodyString += "</tr>";
+    });
+
+    this.elem.querySelector("tbody").innerHTML = bodyString;
+  }
+
+  format(item, heading) {
+    const type = this.metaData.fields[heading].type;
+
+    if (item === undefined) {
+      return "-";
+    }
+
+    if (type == "Date") {
+      return moment(item).format("MMM DD YYYY");
+    }
+
+    if (type === "Boolean") {
+      return item ? "Yes" : "No";
+    }
+
+    return item;
+  }
+
+  buildUI() {
     let headerString = "";
 
     this.metaData.defaultTableHeadings.forEach(heading => {
@@ -19,27 +50,37 @@ class Table {
     this.elem.querySelector(".tableHeading  .newButton").innerHTML =
       "New " + this.resource;
 
-    let tempBodyString = "";
-    for (let i = 0; i < 25; i++) {
-      tempBodyString += "<tr>";
-      for (let j = 0; j < this.elem.querySelectorAll("th").length; j++) {
-        tempBodyString += `<td>${Math.floor(Math.random() * 10000)}</td>`;
-      }
-      tempBodyString += "</tr>";
-    }
-
-    this.elem.querySelector("tbody").innerHTML = tempBodyString;
+    $(".searchInput", this.elem).on("input", e => {
+      this.filter(e.target.value);
+    });
   }
 
-  bindUIActions() {
-    // TODO
+  filter(filterStr) {
+    const filteredData = this.data.filter(record => {
+      for (const key in record) {
+        if (key[0] === "_") continue;
+
+        const item = this.format(record[key], key)
+          .toString()
+          .toLowerCase();
+        if (item.indexOf(filterStr.toLowerCase()) >= 0) {
+          return true;
+        }
+      }
+      return false;
+    });
+
+    this.populateTable(filteredData);
   }
 
   async getData() {
-    this.metaData = (await axios.get(`/metadata/${this.resource}`)).data;
+    this.metaData = (await axios.get(`/metadata/${this.resource}s`)).data;
+    this.data = (await axios.get(
+      `/${this.resource}s?fields=${this.metaData.defaultTableHeadings.join()}`
+    )).data.doc;
 
-    this.populateTable();
-    this.bindUIActions();
+    this.buildUI(this.data);
+    this.populateTable(this.data);
   }
 }
 

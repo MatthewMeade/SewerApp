@@ -1,6 +1,8 @@
 /* bling.js */
 
-window.$ = document.querySelectorAll.bind(document);
+window.$ = (selector, parent = document) => {
+  return parent.querySelectorAll(selector);
+};
 
 Node.prototype.on = window.on = function(name, fn) {
   this.addEventListener(name, fn);

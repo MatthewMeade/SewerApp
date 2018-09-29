@@ -27,7 +27,7 @@ const generateAll = () => {
 
   const meta = global.metaData;
   modelNames.forEach(m => {
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 25; i++) {
       const obj = {};
 
       for (key in meta[m].fields) {
@@ -45,7 +45,7 @@ const generateAll = () => {
             obj[key] = faker.random.number();
             break;
           case "Date":
-            obj[key] = faker.date.recent();
+            obj[key] = faker.date.past(2);
             break;
 
           default:
