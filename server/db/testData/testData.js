@@ -1,6 +1,4 @@
-const faker = require("faker");
 const { createNew } = require("../../ModelMethods.js");
-const { ObjectID } = require("mongodb");
 
 const modelNames = [
   "system",
@@ -24,6 +22,8 @@ const dropAll = () => {
 
 const generateAll = () => {
   dropAll();
+
+  const faker = require("faker");
 
   const meta = global.metaData;
   modelNames.forEach(m => {
