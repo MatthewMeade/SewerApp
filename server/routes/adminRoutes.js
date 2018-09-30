@@ -1,7 +1,7 @@
 // Ensure routes not created in production
 var env = process.env.NODE_ENV || "development";
 if (env !== "development" && env !== "test") {
-  module.exports = app => console.log("Nope");
+  module.exports = app => {}}
   return;
 }
 

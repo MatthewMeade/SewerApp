@@ -178,6 +178,7 @@ class Table {
   }
 
   filterData(data, filterOptions) {
+    console.log(filteOptions);
     if (filterOptions.filterStr === "") {
       return data;
     }
