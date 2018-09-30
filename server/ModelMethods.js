@@ -20,7 +20,6 @@ models.createNew = (model, props, usrId, callBack) => {
 };
 
 models.getAll = (model, fields, usrId, callBack) => {
-  console.log(fields);
   models[model]
     .find(
       { _creator: usrId },

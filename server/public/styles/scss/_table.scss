@@ -65,8 +65,42 @@
 
         transition: background-color 0.5s;
 
+        user-select: none;
+        cursor: pointer;
+
         &:hover {
           background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .thOptions {
+          label,
+          .sortIcons {
+            color: #aaaaaa;
+            transition: color 0.5s;
+          }
+
+          label {
+            float: right;
+            margin-right: 10px;
+          }
+
+          .sortIcons > span,
+          label > span {
+            display: none;
+          }
+
+          &.noSort .noSort,
+          &.sortUp .up,
+          &.sortDown .down,
+          &.include .include,
+          &.noInclude .noInclude {
+            display: inline;
+          }
+        }
+
+        &:hover .sortIcons,
+        &:hover label {
+          color: $black;
         }
       }
     }
