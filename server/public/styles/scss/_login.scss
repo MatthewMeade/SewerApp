@@ -1,122 +1,73 @@
-#login {
-  html,
-  body {
-    margin: 0;
-    padding: 0;
-  }
-
-  #header {
-    width: 100%;
-    height: 20px;
-    background-color: $primary;
-    padding: 10px;
-
-    #title {
-      color: $white;
-      font-family: $headingFont;
-      font-size: 20px;
-      font-weight: bold;
-      margin: 0;
-    }
-  }
-
-  #loginHeader {
-    font-family: $headingFont;
+#loginTab {
+  h1#loginHeader {
     text-align: center;
-    color: $primary;
-    font-size: 4em;
-    margin-top: 20vh;
+    font-size: 3em;
   }
 
   #passwordField {
+    input {
+      font-size: 2em;
+      border-radius: 10px;
+
+      padding: 5px;
+      width: 33%;
+      min-width: 350px;
+
+      border: none;
+      display: block;
+      margin: 0 auto;
+    }
+
     button {
-      background-color: $green;
-      color: $white;
-      border-color: $white;
-      font-weight: bold;
-      padding: 0;
+      display: block;
+
+      margin: 10px auto;
+      font-size: 1.5em;
+      padding: 5px 20px;
+
+      border: 2px solid $primary;
+      background-color: $primary;
+      border-radius: 10px;
+      color: white;
+      width: 33%;
+      min-width: 350px;
+      text-transform: capitalize;
+
+      transition: background-color 0.1s transform 0.1s;
+
+      &:hover {
+        background-color: lighten($primary, 5);
+      }
+
+      &:active {
+        background-color: darken($primary, 5);
+        transform: scale(0.95);
+      }
     }
   }
 
   #warningBox {
-    border: 2px solid $white;
-    height: 60px;
-    font-size: 20px;
-    padding: 10px;
-    border-radius: 2px;
-    font-family: $textFont;
-    color: $white;
     background-color: $red;
-    font-weight: bold;
-    opacity: 0;
-
-    transition: opacity 1s;
-
-    @media (max-width: 450px) {
-      padding: 0;
-    }
-
+    color: white;
     text-align: center;
-
-    svg {
-      margin-right: 10px;
-    }
-
-    @media (max-width: 600px) {
-      font-size: 16px;
-      margin-top: 4px;
-    }
-  }
-
-  #warningBox.active {
-    opacity: 1;
-  }
-
-  body {
-    padding-top: 5em;
-  }
-
-  label {
-    text-align: center;
-    opacity: 0.25;
-    font-size: 2em;
-    display: block;
-  }
-
-  h1 {
-    margin: 1.5em 0 1em 0;
-  }
-
-  input {
-    font-size: 20px;
-    text-align: center;
-    text-indent: 6em;
-    z-index: 1;
-  }
-
-  label {
-    margin: 10px 0 -65px 0;
-    padding: 0;
-  }
-
-  .btn {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    z-index: 100;
-  }
-
-  .alert {
-    transform: rotateX(90deg);
-    opacity: 0;
-
+    width: 33%;
+    min-width: 350px;
+    padding: 10px 0;
+    margin: 0 auto;
+    border-radius: 10px;
     position: relative;
-    top: 20px;
 
-    transition: transform 1s, opacity 1s;
-  }
+    opacity: 0;
+    transition: opacity 1s;
+    i,
+    svg {
+      position: absolute;
+      left: 10px;
+      top: 12px;
+    }
 
-  .alert.active {
-    transform: rotateX(0);
-    opacity: 1;
+    &.active {
+      opacity: 1;
+    }
   }
 }

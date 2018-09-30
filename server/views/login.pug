@@ -1,24 +1,24 @@
 html
     include includes/head.pug
 
-    body#loginPage
-        #header
-            h1#title Kenny Meade Septic Design
+    body
+        nav
+            h1 Kenny Meade Septic Design
 
-        .container
-            .row
-                h1#loginHeader.eight.columns.offset-by-two Enter Password
 
-            #passwordField
-                .row
-                    input(type='password' placeholder="Password...")#passwordInput.eight.columns.offset-by-two
-                .row
-                    button#loginButton(value='submit').four.columns.offset-by-four Enter
+        #tabs
+            #loginTab.tab.active
 
-            .row
-                #warningBox.eight.columns.offset-by-two
+                h1#loginHeader Enter Password
+
+                #passwordField
+                    input(type='password' placeholder="Password...")#passwordInput
+                    button#loginButton(value='submit') Enter
+
+                
+                #warningBox
                     i.fas.fa-exclamation-triangle
                     span The password you entered was incorrect
 
+    script(src="./scripts/helpers.js")
     script(src="./scripts/loginScreen.js")
-    include includes/footer.pug    
