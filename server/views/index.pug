@@ -5,30 +5,33 @@ html
         nav
             h1 Kenny Meade Septic Design
             ul
-                li.home.active Home
+                li.home Home
                 li.systems Systems
                 li.clients Clients
                 li.invoices Invoices
                 li.analytics Analytics
                 li.settings Settings
+
+                #itemTabs
+
                 li.logout#logout Log Out
 
     #tabs
-        #homeTab.active.tab
+        #home.tab
 
-        #systemsTab.tab
+        #systems.tab
             include includes/table.pug
 
-        #clientsTab.tab
+        #clients.tab
             include includes/table.pug
 
-        #invoicesTab.tab
+        #invoices.tab
             include includes/table.pug
 
-        #analyticsTab.tab
+        #analytics.tab
             h2 Analytics
 
-        #settingsTab.tab
+        #settings.tab
             h2 Settings
 
     include includes/footer.pug
