@@ -1,3 +1,3 @@
-import '../sass/style.scss';
+import '../sass/common.scss';
 
 alert('JS IS LOADED!');
