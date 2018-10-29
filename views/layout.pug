@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        title= `${title} | ${h.siteName}`
+        link(rel='stylesheet', href='/dist/style.css')
+        link(rel="shortcut icon" type="image/png" href="/images/icons/doughnut.png")
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+
+    body
+        nav.navbar
+            .navbar-brand
+                h1 Sewer App
+        block content
+            p Default
+
+    block scripts
+      script(src="/dist/Common.bundle.js")
