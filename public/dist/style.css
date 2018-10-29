@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*! bulma.io v0.7.2 | MIT License | github.com/jgthms/bulma */
 @keyframes spinAround {
   from {
@@ -14422,5 +14423,9 @@ label.panel-block {
 .footer {
   background-color: #fafafa;
   padding: 3rem 1.5rem 6rem; }
+=======
+body {
+  background-color: green; }
+>>>>>>> 92b2fc1d34d1928403af36ae4f59f38dd68af9ef
 
 /*# sourceMappingURL=style.css.map*/

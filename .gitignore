@@ -7,5 +7,6 @@ TODO.todo
 .vagrant
 *.log
 Vagrantfile
-server/public/styles/compiled/*
+public/dist/*
 variables.env
+public/dist/*

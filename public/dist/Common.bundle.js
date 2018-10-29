@@ -70,7 +70,7 @@
 /* 0 */
 /***/ (function(module, exports) {
 
-// removed by extract-text-webpack-plugin
+throw new Error("Module build failed: ModuleBuildError: Module build failed: \r\n<<<<<<< HEAD\n@import '~bulma/bulma';\n=======\nbody {\n  background-color: green;\n}\n>>>>>>> 92b2fc1d34d1928403af36ae4f59f38dd68af9ef\n\r\n^\r\n      Invalid CSS after \"<\": expected 1 selector or at-rule, was \"<<<<<<< HEAD\"\r\n      in C:\\Development\\SewerApp\\public\\sass\\style.scss (line 1, column 1)\n    at runLoaders (C:\\Development\\SewerApp\\node_modules\\webpack\\lib\\NormalModule.js:192:19)\n    at C:\\Development\\SewerApp\\node_modules\\loader-runner\\lib\\LoaderRunner.js:364:11\n    at C:\\Development\\SewerApp\\node_modules\\loader-runner\\lib\\LoaderRunner.js:230:18\n    at context.callback (C:\\Development\\SewerApp\\node_modules\\loader-runner\\lib\\LoaderRunner.js:111:13)\n    at Object.asyncSassJobQueue.push [as callback] (C:\\Development\\SewerApp\\node_modules\\sass-loader\\lib\\loader.js:55:13)\n    at Object.done [as callback] (C:\\Development\\SewerApp\\node_modules\\neo-async\\async.js:8077:18)\n    at options.error (C:\\Development\\SewerApp\\node_modules\\node-sass\\lib\\index.js:294:32)");
 
 /***/ }),
 /* 1 */

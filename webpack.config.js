@@ -50,16 +50,17 @@ const styles = {
 };
 
 // We can also use plugins - this one will compress the crap out of our JS
-// const uglify = new webpack.optimize.UglifyJsPlugin({
-//   // eslint-disable-line
-//   compress: { warnings: false },
-// });
+const uglify = new webpack.optimize.UglifyJsPlugin({
+  // eslint-disable-line
+  compress: { warnings: false },
+});
 
 // OK - now it's time to put it all together
 const config = {
   entry: {
     // we only have 1 entry, but I've set it up for multiple in the future
     Common: './public/javascripts/common.js',
+    App: './public/javascripts/sewer-app.js',
   },
   // we're using sourcemaps and here is where we specify which kind of sourcemap to use
   devtool: 'source-map',
@@ -83,13 +84,6 @@ const config = {
     // here is where we tell it to output our css to a separate file
     new ExtractTextPlugin('[name].css'),
   ],
-  devServer: {
-    port: 3000,
-    open: true,
-    proxy: {
-      '/api': 'http://localhost:8080',
-    },
-  },
 };
 // webpack is cranky about some packages using a soon to be deprecated API. shhhhhhh
 process.noDeprecation = true;
