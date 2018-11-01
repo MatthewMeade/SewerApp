@@ -7,9 +7,25 @@ html(lang="en")
         meta(name="viewport" content="width=device-width, initial-scale=1")
 
     body
-        nav.navbar
+        nav.navbar.is-primary
             .navbar-brand
-                h1 Sewer App
+                h1.navbar-item Sewer App
+                a.navbar-burger.burger(role="button")
+                    span
+                    span
+                    span
+
+            .navbar-menu
+                .navbar-start
+                    each item in h.menu
+                        a(href=item.path class=(currentPath.startsWith(item.path) ? "is-active" : "")).navbar-item.is-tab= item.title
+
+                if user || true
+                    .navbar-end
+                        .navbar-item
+                            .buttons
+                                a(data-method="post" href="/logout").button.is-danger Log out 
+
         block content
             p Default
 
