@@ -21,7 +21,7 @@ exports.staticMap = ([lng, lat]) =>
 exports.icon = name => fs.readFileSync(`./public/images/icons/${name}.svg`);
 
 // Some details about the site
-exports.siteName = `Now That's Delicious!`;
+exports.siteName = `Sewer App`;
 
 exports.menu = [
   { path: '/home', title: 'Home' },
