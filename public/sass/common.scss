@@ -1,4 +1,10 @@
+// Bulma Variable Override
+
+// Custom Variables
+
+@import '~bulmaswatch/flatly/_variables.scss';
 @import '~bulma/bulma';
+@import '~bulmaswatch/flatly/_overrides.scss';
 
 nav h1 {
   font-weight: bold;
