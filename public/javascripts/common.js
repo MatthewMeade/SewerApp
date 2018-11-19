@@ -1,3 +1,7 @@
 import '../sass/common.scss';
 
-// alert('JS IS LOADED');
+import BulmaCommon from './BulmaCommon';
+
+BulmaCommon();
+
+alert('JS IS LOADED');

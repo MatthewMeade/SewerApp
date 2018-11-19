@@ -10,12 +10,12 @@ html(lang="en")
         nav.navbar.is-primary
             .navbar-brand
                 h1.navbar-item Sewer App
-                a.navbar-burger.burger(role="button")
+                a.navbar-burger(role="button" data-target="navMenu")
                     span
                     span
                     span
 
-            .navbar-menu
+            .navbar-menu#navMenu
                 .navbar-start
                     each item in h.menu
                         a(href=item.path class=(currentPath.startsWith(item.path) ? "is-active" : "")).navbar-item.is-tab= item.title

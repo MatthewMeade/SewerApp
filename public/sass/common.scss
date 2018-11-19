@@ -6,5 +6,9 @@
 @import '~bulmaswatch/flatly/_overrides.scss';
 
 nav h1 {
-  font-weight: bold;
+    font-weight: bold;
+}
+
+#navMenu {
+    border-radius: 0 !important;
 }
