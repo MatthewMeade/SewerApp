@@ -4,18 +4,18 @@ mongoose.Promise = global.Promise;
 const systemSchema = new mongoose.Schema({
     // People Refs
     client: {
-        type: mongoose.Schema.ObjectID,
-        ref: 'Client',
-        required: 'You must supply a client',
+        type: mongoose.Schema.ObjectId,
+        ref: 'client',
+        // required: 'You must supply a client',
     },
     inspector: {
-        type: mongoose.Schema.ObjectID,
-        ref: 'Inspector',
+        type: mongoose.Schema.ObjectId,
+        ref: 'inspector',
         // required: 'You must supply an inspector',
     },
     contractor: {
-        type: mongoose.Schema.ObjectID,
-        ref: 'Contractor',
+        type: mongoose.Schema.ObjectId,
+        ref: 'contractor',
         // required: 'You must supply a Contractor',
     },
 
@@ -105,7 +105,7 @@ const systemSchema = new mongoose.Schema({
     // Specs
     specs: [
         {
-            type: mongoose.Schema.ObjectID,
+            type: mongoose.Schema.ObjectId,
             ref: 'Spec',
         },
     ],
@@ -113,4 +113,4 @@ const systemSchema = new mongoose.Schema({
 
 systemSchema.index({ location: '2dsphere' });
 
-module.exports = mongoose.model('System', systemSchema);
+module.exports = mongoose.model('system', systemSchema);

@@ -4,4 +4,4 @@ import BulmaCommon from './BulmaCommon';
 
 BulmaCommon();
 
-alert('JS IS LOADED');
+// alert('JS IS LOADED');

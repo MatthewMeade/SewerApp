@@ -22,6 +22,7 @@
         "axios": "^0.15.3",
         "body-parser": "^1.17.1",
         "bulma": "^0.7.2",
+        "bulma-divider": "^2.0.1",
         "bulmaswatch": "^0.7.2",
         "concurrently": "^3.4.0",
         "connect-flash": "^0.1.1",

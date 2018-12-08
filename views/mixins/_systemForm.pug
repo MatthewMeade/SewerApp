@@ -1,0 +1,68 @@
+mixin systemForm(system = {})
+    .container.box
+        h2.title.is-2= system._id ? 'Update System' : 'New Syststem'
+        form(action=`/add/system/${system._id || ''}` method="POST" enctype="multipart/form-data")
+
+            #SF_people
+                h4.title.is-4 People
+                .columns
+                    .column.is-3
+                        .field
+                            .label Inspector
+                            .control
+                                .select
+                                    select
+                                        option Matthew Meade
+                                        option Meghan Meade
+                    .column.is-3
+                        .field
+                            .label Inspector
+                            .control
+                                .select
+                                    select
+                                        option Matthew Meade
+                                        option Meghan Meade
+
+                    .column.is-3
+                        .field
+                            .label Contractor
+                            .control
+                                .select
+                                    select
+                                        option Matthew Meade
+                                        option Meghan Meade 
+            #SF_location
+                .is-divider
+                h4.title.is-4 Site Location
+                .columns
+                    .column
+                        .field
+                            .label Municipality
+                            .control
+                                input.input(name="municipality")
+                .columns
+                    .column
+                        .field
+                            .label Latitude
+                            .control
+                                input.input(name="location[coordinates][0]")
+                    .column
+                        .field
+                            .label Longitude
+                            .control
+                                input.input(name="location[coordinates][1]")
+                .columns
+                    .column
+                        .field
+                            .label Lot Width
+                            .control
+                                input.input(name="width")
+                    .column
+                        .field
+                            .label Lot Height
+                            .control
+                                input.input(name="length")
+                    
+
+            .field
+                
