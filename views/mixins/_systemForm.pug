@@ -36,33 +36,38 @@ mixin systemForm(system = {})
                 h4.title.is-4 Site Location
                 .columns
                     .column
-                        .field
-                            .label Municipality
-                            .control
-                                input.input(name="municipality")
-                .columns
+                        .columns
+                            .column
+                                .field
+                                    .label Municipality
+                                    .control
+                                        input.input(name="municipality")
+                        .columns
+                            .column
+                                .field
+                                    .label Latitude
+                                    .control
+                                        input.input(name="location[coordinates][0]" value="47.5849426")#SF_lat
+                            .column
+                                .field
+                                    .label Longitude
+                                    .control
+                                        input.input(name="location[coordinates][1]" value="-52.7149954")#SF_lng
+                        .columns
+                            .column
+                                .field
+                                    .label Lot Width
+                                    .control
+                                        input.input(name="width")
+                            .column
+                                .field
+                                    .label Lot Height
+                                    .control
+                                        input.input(name="length")
                     .column
-                        .field
-                            .label Latitude
-                            .control
-                                input.input(name="location[coordinates][0]")
-                    .column
-                        .field
-                            .label Longitude
-                            .control
-                                input.input(name="location[coordinates][1]")
-                .columns
-                    .column
-                        .field
-                            .label Lot Width
-                            .control
-                                input.input(name="width")
-                    .column
-                        .field
-                            .label Lot Height
-                            .control
-                                input.input(name="length")
+                        img(src="#")#SF_map
                     
 
             .field
                 
+    script(src="/dist/SystemForm.bundle.js")
