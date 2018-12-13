@@ -9,7 +9,7 @@ module.exports.mapImage = async (req, res) => {
     //     process.env.MAPQUEST_KEY
     // }&center=${lat},${lng}&type=sat&size=300,250&zoom=16&scalebar=false&imagetype=jpeg`;
 
-    const url = `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=17&size=500x500&key=${
+    const url = `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=17&size=640x450&key=${
         process.env.GOOGLE_MAP_KEY
     }&maptype=hybrid`;
 

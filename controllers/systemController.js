@@ -38,7 +38,7 @@ exports.createSystem = async (req, res) => {
     res.redirect('/systems');
 };
 
-exports.updateStore = async (req, res) => {
+exports.updateSystem = async (req, res) => {
     req.body.location.type = 'Point';
 
     const system = await Store.findOneAndUpdate(

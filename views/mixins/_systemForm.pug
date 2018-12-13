@@ -8,66 +8,173 @@ mixin systemForm(system = {})
                 .columns
                     .column.is-3
                         .field
-                            .label Inspector
-                            .control
-                                .select
-                                    select
-                                        option Matthew Meade
-                                        option Meghan Meade
+                            label.label Inspector
+                                .control
+                                    .select
+                                        select
+                                            option Matthew Meade
+                                            option Meghan Meade
                     .column.is-3
                         .field
-                            .label Inspector
-                            .control
-                                .select
-                                    select
-                                        option Matthew Meade
-                                        option Meghan Meade
+                            label.label Inspector
+                                .control
+                                    .select
+                                        select
+                                            option Matthew Meade
+                                            option Meghan Meade
 
                     .column.is-3
                         .field
-                            .label Contractor
-                            .control
-                                .select
-                                    select
-                                        option Matthew Meade
-                                        option Meghan Meade 
+                            label.label Contractor
+                                .control
+                                    .select
+                                        select
+                                            option Matthew Meade
+                                            option Meghan Meade 
+            #SF_letters
+                    .is-divider
+                    h4.title.is-4 Cover Letters
+                    .columns
+                        .column
+                            .field
+                                label.label Inspector Cover Letter
+                                    .control
+                                        textarea.textarea(name="inspectorLetterBody")
+                        .column
+                            label.field
+                                .label Inspector Cover Letter
+                                    .control
+                                        textarea.textarea(name="inspectorLetterBody")
+                                        
             #SF_location
                 .is-divider
-                h4.title.is-4 Site Location
+                h4.title.is-4 Location
                 .columns
                     .column
                         .columns
                             .column
                                 .field
-                                    .label Municipality
-                                    .control
-                                        input.input(name="municipality")
+                                    label.label Municipality
+                                        .control
+                                            input.input(name="municipality")
                         .columns
                             .column
                                 .field
-                                    .label Latitude
-                                    .control
-                                        input.input(name="location[coordinates][0]" value="47.5849426")#SF_lat
-                            .column
-                                .field
-                                    .label Longitude
-                                    .control
-                                        input.input(name="location[coordinates][1]" value="-52.7149954")#SF_lng
+                                    label.label Address
+                                        .control
+                                            input.input(name="address")
                         .columns
                             .column
                                 .field
-                                    .label Lot Width
-                                    .control
-                                        input.input(name="width")
+                                    label.label Latitude
+                                        .control
+                                            input.input(name="location[coordinates][0]" value="47.5849426")#SF_lat
                             .column
                                 .field
-                                    .label Lot Height
-                                    .control
-                                        input.input(name="length")
+                                    label.label Longitude
+                                        .control
+                                            input.input(name="location[coordinates][1]" value="-52.7149954")#SF_lng
+                        .columns
+                            .column
+                                .field
+                                    label.label Lot Width
+                                        .control
+                                            input.input(name="width")
+                            .column
+                                .field
+                                    label.label Lot Height
+                                        .control
+                                            input.input(name="length")
+                        .columns
+                            .column
+                                .field
+                                    label.label Water
+                                        .control
+                                            .select
+                                                select(name="water")
+                                                    option Off Site
+                                                    option Dug Well
+                                                    option Drilled Well
                     .column
-                        img(src="#")#SF_map
-                    
+                        .field
+                            label.label Map
+                                img(src="#")#SF_map
 
-            .field
+            #SF_letters
+                    .is-divider
+                    h4.title.is-4 Photos
+
+                    .columns
+                        .column
+
+                            h5.title.is-5 Site Photos
+                            .columns
+                                .column.is-11
+                                
+                                    .file.has-name.is-fullwidth
+                                        label.file-label
+                                            input.file-input(type="file" name="sitePhotos[0]")
+                                            .file-cta
+                                                .file-icon
+                                                    i.fas.fa-upload
+                                                .file-label Choose a file...
+                                            .file-name -
+                                .column.is-1
+                                    i.fas.fa-times.SF_File_Close
+                    
+                        .column
+
+                            h5.title.is-5 Map Photos
+                            .columns
+                                .column.is-11
+                                
+                                    .file.has-name.is-fullwidth
+                                        label.file-label
+                                            input.file-input(type="file" name="mapPhotos[0]")
+                                            .file-cta
+                                                .file-icon
+                                                    i.fas.fa-upload
+                                                .file-label Choose a file...
+                                            .file-name -
+                                .column.is-1
+                                    i.fas.fa-times.SF_File_Close
+
+                            .columns
+                                .column.is-11
+                                
+                                    .file.has-name.is-fullwidth
+                                        label.file-label
+                                            input.file-input(type="file" name="mapPhotos[1]")
+                                            .file-cta
+                                                .file-icon
+                                                    i.fas.fa-upload
+                                                .file-label Choose a file...
+                                            .file-name -
+                                .column.is-1
+                                    i.fas.fa-times.SF_File_Close
+
+
+                        .column
+
+                            h5.title.is-5 Floor Plans
+                            .columns
+                                .column.is-11
+                                
+                                    .file.has-name.is-fullwidth
+                                        label.file-label
+                                            input.file-input(type="file" name="floorPlans[0]")
+                                            .file-cta
+                                                .file-icon
+                                                    i.fas.fa-upload
+                                                .file-label Choose a file...
+                                            .file-name -
+                                .column.is-1
+                                    i.fas.fa-times.SF_File_Close
+                            
+                                            
+                            
+                                        
+                                    
+
                 
     script(src="/dist/SystemForm.bundle.js")
