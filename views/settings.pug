@@ -3,3 +3,6 @@ extends layout
 block content
     h2.subtitle Settings
     
+    h3 Debug User Details
+    code(style="white-space: pre-wrap; display: block;")= JSON.stringify(user, null, 2)
+    
