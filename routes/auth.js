@@ -21,10 +21,10 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    failureFlash: "There was an issue logging you in",
-    successFlash: "You are now logged in!",
-    failureRedirect: "/",
-    successRedirect: "/"
+    failureRedirect: "/login",
+    failureFlash: true,
+    successRedirect: "/",
+    successFlash: "You are now logged in!"
   })
 );
 

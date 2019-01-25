@@ -23,6 +23,15 @@ module.exports = async passport => {
         callbackURL: "/auth/google/callback"
       },
       async (accessToken, refreshToken, profile, done) => {
+        // Ensure whitelisted user
+        if (
+          process.env.EmailWhitelist.split(",").indexOf(
+            profile.emails[0].value
+          ) <= 0
+        ) {
+          return done(null, false, "Your email is not on the whitelist");
+        }
+
         // Check for user with existing email
         const existingUser = await User.findOne({
           email: profile.emails[0].value
