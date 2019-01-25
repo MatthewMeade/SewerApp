@@ -20,11 +20,12 @@ router.get(
 // Google Callback
 router.get(
   "/google/callback",
-  passport.authenticate("google", { failureRedirect: "/" }),
-  function(req, res) {
-    req.flash("success", "You are now logged in");
-    res.redirect("/");
-  }
+  passport.authenticate("google", {
+    failureFlash: "There was an issue logging you in",
+    successFlash: "You are now logged in!",
+    failureRedirect: "/",
+    successRedirect: "/"
+  })
 );
 
 // Logout Handle

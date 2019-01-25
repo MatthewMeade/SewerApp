@@ -4,7 +4,11 @@ module.exports = {
       return next();
     }
 
-    req.flash("error", "Please log in to view this page");
+    if (req.route.path != "/")
+      req.flash(
+        "error",
+        "You must be logged in to view the page you requested"
+      );
 
     res.redirect("/login");
   },
