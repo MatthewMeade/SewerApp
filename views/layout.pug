@@ -1,3 +1,6 @@
+include mixins/_flashes
+
+
 <!DOCTYPE html>
 html(lang="en")
     head
@@ -15,19 +18,23 @@ html(lang="en")
                     span
                     span
 
-            .navbar-menu#navMenu
-                .navbar-start
-                    each item in h.menu
-                        a(href=item.path class=(currentPath.startsWith(item.path) ? "is-active" : "")).navbar-item.is-tab= item.title
 
-                if user || true
+            if user
+                .navbar-menu#navMenu
+                    .navbar-start
+                        each item in h.menu
+                            a(href=item.path class=(currentPath.startsWith(item.path) ? "is-active" : "")).navbar-item.is-tab= item.title
+
                     .navbar-end
                         .navbar-item
                             .buttons
-                                a(data-method="post" href="/logout").button.is-danger Log out 
+                                a(data-method="post" href="/auth/logout").button.is-danger Log out 
 
-        block content
-            p Default
+        #appBody
+            +flashes(flashes)
+
+            block content
+                p Default
 
     block scripts
       script(src="/dist/Common.bundle.js")

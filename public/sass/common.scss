@@ -1,39 +1,80 @@
 // Custom Variables
 
 // Bulma with flaty theme
-@import '~bulmaswatch/flatly/_variables.scss';
-@import '~bulma/bulma';
-@import '~bulmaswatch/flatly/_overrides.scss';
-@import '~bulma-divider';
+@import "~bulmaswatch/flatly/_variables.scss";
+@import "~bulma/bulma";
+@import "~bulmaswatch/flatly/_overrides.scss";
+@import "~bulma-divider";
 
 nav h1 {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 #navMenu {
-    border-radius: 0 !important;
+  border-radius: 0 !important;
 }
 
 #SF_map {
-    display: block;
-    height: 285px;
-    // margin: 0 auto;
-    background: #ddd;
-    border-radius: 5px;
+  display: block;
+  height: 285px;
+  // margin: 0 auto;
+  background: #ddd;
+  border-radius: 5px;
 }
 
 #SF_Water {
-    width: 100%;
+  width: 100%;
 }
 
 .file-cta {
-    background-color: #fff;
+  background-color: #fff;
 }
 
 .SF_File_Close {
-    font-size: 1.5em;
-    position: relative;
-    top: 0.25em;
-    left: -0.5em;
-    color: #666;
+  font-size: 1.5em;
+  position: relative;
+  top: 0.25em;
+  left: -0.5em;
+  color: #666;
+}
+
+#appBody {
+  padding: 1em;
+}
+
+@keyframes flashOpen {
+  0% {
+    max-height: 0;
+    left: -100%;
+    opacity: 0;
+  }
+  100% {
+    max-height: 500px;
+    left: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes flashClose {
+  0% {
+    max-height: 500px;
+    left: 0;
+    opacity: 1;
+  }
+  100% {
+    max-height: 0;
+    left: -100%;
+    opacity: 0;
+  }
+}
+.message {
+  position: relative !important;
+
+  &.open {
+    animation: flashOpen 1s forwards;
+  }
+  &.closed {
+    animation: flashClose 1s backwards;
+    animation-fill-mode: forwards;
+  }
 }

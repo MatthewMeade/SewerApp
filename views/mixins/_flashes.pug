@@ -1,0 +1,18 @@
+mixin flash(type, heading, messages)
+    article(class="message open " + type)
+        .message-header
+            p=heading
+            button.delete
+        
+        .message-body
+            ul
+                each val in messages
+                    li= val
+
+mixin flashes(messages)
+    if messages.error
+        +flash("is-danger", "Error!", messages.error)
+    if messages.success
+        +flash("is-success", "Success!", messages.success)
+            
+
