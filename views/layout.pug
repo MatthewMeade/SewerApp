@@ -11,15 +11,14 @@ html(lang="en")
 
     body
         nav.navbar.is-primary
-            .navbar-brand
-                h1.navbar-item Sewer App
-                a.navbar-burger(role="button" data-target="navMenu")
-                    span
-                    span
-                    span
-
-
             if user
+                .navbar-brand
+                    h1.navbar-item Sewer App
+                    a.navbar-burger(role="button" data-target="navMenu")
+                        span
+                        span
+                        span
+
                 .navbar-menu#navMenu
                     .navbar-start
                         each item in h.menu
