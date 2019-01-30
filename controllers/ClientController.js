@@ -90,3 +90,13 @@ exports.updateClient = async (req, res) => {
   req.flash("success", `Successfully edited ${client.firstName} ${client.lastName}`);
   res.redirect(`/clients/${client.id}`);
 };
+
+exports.deleteClient = async (req, res) => {
+  await Client.findOneAndDelete({
+    _id: req.params.id,
+    author: req.user._id
+  });
+
+  req.flash("success", `Successfully deleted ${client.firstName} ${client.lastName}`);
+  res.redirect(`/clients`);
+};
