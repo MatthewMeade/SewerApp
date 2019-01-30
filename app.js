@@ -73,8 +73,11 @@ app.use((req, res, next) => {
 // After allllll that above middleware, we finally handle our own routes!
 const pageRoutes = require("./routes/pages");
 const oauthRoutes = require("./routes/auth");
+const clientRoutes = require("./routes/clientRoutes");
+
 app.use("/", pageRoutes);
 app.use("/auth", oauthRoutes);
+app.use("/clients", clientRoutes);
 
 // If that above routes didnt work, we 404 them and forward to error handler
 app.use(errorHandlers.notFound);

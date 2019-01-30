@@ -14,5 +14,7 @@ mixin flashes(messages)
         +flash("is-danger", "Error!", messages.error)
     if messages.success
         +flash("is-success", "Success!", messages.success)
+    if messages.info
+        +flash("is-info", "Info", messages.info)
             
 
