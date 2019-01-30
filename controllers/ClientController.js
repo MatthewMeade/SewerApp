@@ -20,8 +20,6 @@ exports.renderClientList = async (req, res) => {
 
   const [clients, count] = await Promise.all([clientsPromise, countPromise]);
 
-  console.log({ page, count, orderBy, sortOrder, search });
-
   const pages = Math.ceil(count / pageSize);
   if (!clients.length && skip) {
     req.flash("info", `Requested page ${page} doesn't exist. Redirected to page ${pages}`);
@@ -40,13 +38,17 @@ exports.renderClientList = async (req, res) => {
   res.render("clientsList", { title: "Clients", clients, page, pages, count, orderBy, sortOrder, search });
 };
 
-exports.renderClientView = async (req, res) => {
+exports.renderClientView = async (req, res, next) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return next({ error: "That client does not exist", redirect: "/clients" });
+  }
+
   const client = await Client.findOne({
     _id: req.params.id,
     author: req.user._id
   });
 
-  if (!client) return next();
+  if (!client) return next({ error: "That client does not exist", redirect: "/clients" });
 
   res.render("clientView", { title: `Client: ${client.firstName} ${client.lastName}` });
 };

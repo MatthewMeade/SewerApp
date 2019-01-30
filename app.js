@@ -83,7 +83,8 @@ app.use("/clients", clientRoutes);
 app.use(errorHandlers.notFound);
 
 // One of our error handlers will see if these errors are just validation errors
-app.use(errorHandlers.flashValidationErrors);
+app.use(errorHandlers.flashMongoValidationErrors);
+app.use(errorHandlers.flashCustomErrors);
 
 // Otherwise this was a really bad error we didn't expect! Shoot eh
 if (app.get("env") === "development") {
