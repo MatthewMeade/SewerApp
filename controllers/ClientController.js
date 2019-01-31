@@ -54,16 +54,24 @@ exports.renderClientView = async (req, res, next) => {
 };
 
 exports.renderNewClientForm = (req, res) => {
-  res.render("editClient", { title: "New Client" });
+  const client = req.session.body || {};
+  req.session.body = null;
+  res.render("editClient", { title: "New Client", client, isNew: true });
 };
 
 exports.renderEditClientForm = async (req, res) => {
-  const client = await Client.findOne({
-    _id: req.params.id,
-    author: req.user._id
-  });
+  const client =
+    req.session.body ||
+    (await Client.findOne({
+      _id: req.params.id,
+      author: req.user._id
+    }));
+  req.session.body = null;
+
   res.render("editClient", {
-    title: `Edit Client ${client.firstName} ${client.lastName}`
+    title: `Edit Client`,
+    client,
+    new: false
   });
 };
 

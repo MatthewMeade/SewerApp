@@ -21,20 +21,19 @@ const clientSchema = new mongoose.Schema({
 
   email: {
     type: String,
-    unique: true,
     lowercase: true,
-    trim: true,
-    validate: [validator.isEmail, "Invalid Email Address"]
+    trim: true
+    // validate: [validator.isEmail, "Invalid Email Address"]
   },
 
   homePhone: {
-    type: String,
-    validate: [validator.isMobilePhone, "Invalid Home Phone Number"]
+    type: String
+    // validate: [validator.isMobilePhone, "Invalid Home Phone Number"]
   },
 
   mobilePhone: {
-    type: String,
-    validate: [validator.isMobilePhone, "Invalid Mobile Phone Number"]
+    type: String
+    // validate: [validator.isMobilePhone, "Invalid Mobile Phone Number"]
   },
 
   address: String,
@@ -65,7 +64,7 @@ clientSchema.pre("save", async function(next) {
   if (!this.isModified("firstName") && !this.isModified("firstName")) return next();
 
   // Generate slug
-  this.slug = slug(`${firstName} ${lastname}`);
+  this.slug = slug(`${this.firstName} ${this.lastName}`);
 
   // Check for duplicate slug
   const slugRegEx = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, "i");

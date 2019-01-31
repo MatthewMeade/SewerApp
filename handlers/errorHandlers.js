@@ -34,8 +34,8 @@ exports.flashMongoValidationErrors = (err, req, res, next) => {
   if (!err.errors) return next(err);
   // validation errors look like
   const errorKeys = Object.keys(err.errors);
-  console.log("err.errors:", err.errors);
   errorKeys.forEach(key => req.flash("error", err.errors[key].message));
+  req.session.body = req.body;
   res.redirect("back");
 };
 

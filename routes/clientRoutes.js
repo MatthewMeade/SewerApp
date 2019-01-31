@@ -12,14 +12,14 @@ router.use(ensureIsAuth);
 // Renders client list
 router.get("/", catchErrors(clientController.renderClientList));
 
+// Render the new client form
+router.get("/new", clientController.renderNewClientForm);
+
 // Renders a client detail page
 router.get("/:id", catchErrors(clientController.renderClientView));
 
 // Render the new client form with values pre filled
 router.get("/:id/edit", catchErrors(clientController.renderEditClientForm));
-
-// Render the new client form
-router.get("/new", catchErrors(clientController.renderNewClientForm));
 
 // POST
 // Create a new Client

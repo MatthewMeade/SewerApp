@@ -1,5 +1,76 @@
 extends layout
 
 block content
-    h2.subtitle= title
+
+    .container
+        h2.is-size-1.title.has-text-centered= title
+        form(action=`/clients/${client.id || "new"}`, method="post").box
     
+
+            .field.is-horizontal
+                .field-label.is-normal
+                    label.label Client Name
+                .field-body
+                    .field
+                        .control.is-expanded
+                            input.input(type="text", name="firstName" placeholder="First" value=client.firstName required)
+                    .field
+                        .control.is-expanded
+                            input.input(type="text", name="lastName" placeholder="Last" value=client.lastName required)
+
+            br
+
+            .field.is-horizontal
+                .field-label.is-normal
+                    label.label Email
+                .field-body
+                    .field
+                        .control.is-expanded
+                            input.input(type="email", name="email" placeholder="example@example.com" value=client.email)
+
+            br
+
+            .field.is-horizontal
+                .field-label.is-normal
+                    label.label Home Phone
+                .field-body
+                    .field
+                        .control.is-expanded
+                            input.input(type="tel", name="homePhone" placeholder="709-555-5555" value=client.homePhone)
+
+            .field.is-horizontal
+                .field-label.is-normal
+                    label.label Mobile Phone
+                .field-body
+                    .field
+                        .control.is-expanded
+                            input.input(type="tel", name="mobilePhone" placeholder="709-555-5555" value=client.mobilePhone)
+
+            br
+
+            .field.is-horizontal
+                .field-label.is-normal
+                    label.label Address
+                .field-body
+                    .field
+                        .control
+                            textarea.textarea(name="address" placeholder="123 Main St\nSt. John's, NL\nA1A 1A1" rows=3)=client.address
+
+            br
+
+            .field.is-horizontal
+                .field-label.is-normal
+                    label.label Notes
+                .field-body
+                    .field
+                        .control
+                            textarea.textarea(name="notes" placeholder="Enter Notes..." value)=client.notes
+
+
+            br 
+
+            .field.is-grouped.is-grouped-centered
+                p.control
+                    button.button.is-primary(type="submit") Submit
+                p.control
+                    a.button.is-light(href=`/clients/${client.id || ""}`) Cancel
