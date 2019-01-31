@@ -39,12 +39,8 @@ exports.renderClientList = async (req, res) => {
 };
 
 exports.renderClientView = async (req, res, next) => {
-  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-    return next({ error: "That client does not exist", redirect: "/clients" });
-  }
-
   const client = await Client.findOne({
-    _id: req.params.id,
+    slug: req.params.id,
     author: req.user._id
   });
 
@@ -63,10 +59,12 @@ exports.renderEditClientForm = async (req, res) => {
   const client =
     req.session.body ||
     (await Client.findOne({
-      _id: req.params.id,
+      slug: req.params.id,
       author: req.user._id
     }));
   req.session.body = null;
+
+  if (!client) return next({ error: "That client does not exist", redirect: "/clients" });
 
   res.render("editClient", {
     title: `Edit Client`,
@@ -85,7 +83,7 @@ exports.createClient = async (req, res) => {
 exports.updateClient = async (req, res) => {
   const client = await Client.findOneAndUpdate(
     {
-      _id: req.params.id,
+      slug: req.params.id,
       author: req.user._id
     },
     req.body,
@@ -95,15 +93,19 @@ exports.updateClient = async (req, res) => {
     }
   ).exec();
 
+  if (!client) return next({ error: "That client does not exist", redirect: "/clients" });
+
   req.flash("success", `Successfully edited ${client.firstName} ${client.lastName}`);
   res.redirect(`/clients/${client.id}`);
 };
 
 exports.deleteClient = async (req, res) => {
   await Client.findOneAndDelete({
-    _id: req.params.id,
+    slug: req.params.id,
     author: req.user._id
   });
+
+  if (!client) return next({ error: "That client does not exist", redirect: "/clients" });
 
   req.flash("success", `Successfully deleted ${client.firstName} ${client.lastName}`);
   res.redirect(`/clients`);

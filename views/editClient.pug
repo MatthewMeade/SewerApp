@@ -4,7 +4,7 @@ block content
 
     .container
         h2.is-size-1.title.has-text-centered= title
-        form(action=`/clients/${client.id || "new"}`, method="post").box
+        form(action=`/clients/${client.slug || "new"}`, method="post").box
     
 
             .field.is-horizontal
@@ -73,4 +73,4 @@ block content
                 p.control
                     button.button.is-primary(type="submit") Submit
                 p.control
-                    a.button.is-light(href=`/clients/${client.id || ""}`) Cancel
+                    a.button.is-light(href=`/clients/${client.slug || ""}`) Cancel
