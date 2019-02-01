@@ -1,6 +1,7 @@
 import { $, $$ } from "./Bling";
 
 function setupToggle(modal, openBtn) {
+  if (!modal || !openBtn) return;
   openBtn.on("click", () => modal.classList.add("is-active"));
 
   modal.querySelector(".modal-background").onclick = () => modal.classList.remove("is-active");
