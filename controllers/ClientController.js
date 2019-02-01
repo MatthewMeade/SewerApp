@@ -46,7 +46,7 @@ exports.renderClientView = async (req, res, next) => {
 
   if (!client) return next({ error: "That client does not exist", redirect: "/clients" });
 
-  res.render("clientView", { title: `Client: ${client.firstName} ${client.lastName}` });
+  res.render("clientView", { title: ` ${client.firstName} ${client.lastName}`, client });
 };
 
 exports.renderNewClientForm = (req, res) => {
@@ -67,9 +67,9 @@ exports.renderEditClientForm = async (req, res) => {
   if (!client) return next({ error: "That client does not exist", redirect: "/clients" });
 
   res.render("editClient", {
-    title: `Edit Client`,
+    title: `${client.firstName} ${client.lastName}`,
     client,
-    new: false
+    isNew: false
   });
 };
 
@@ -77,7 +77,7 @@ exports.createClient = async (req, res) => {
   req.body.author = req.user._id;
   const client = await new Client(req.body).save();
   req.flash("success", `Successfully created ${client.firstName} ${client.lastName}`);
-  res.redirect(`/clients/${client.id}`);
+  res.redirect(`/clients/${client.slug}`);
 };
 
 exports.updateClient = async (req, res) => {
@@ -96,7 +96,7 @@ exports.updateClient = async (req, res) => {
   if (!client) return next({ error: "That client does not exist", redirect: "/clients" });
 
   req.flash("success", `Successfully edited ${client.firstName} ${client.lastName}`);
-  res.redirect(`/clients/${client.id}`);
+  res.redirect(`/clients/${client.slug}`);
 };
 
 exports.deleteClient = async (req, res) => {

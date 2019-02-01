@@ -23,7 +23,6 @@ const clientSchema = new mongoose.Schema({
     type: String,
     lowercase: true,
     trim: true
-    // validate: [validator.isEmail, "Invalid Email Address"]
   },
 
   homePhone: {

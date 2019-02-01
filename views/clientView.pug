@@ -1,0 +1,78 @@
+extends layout
+
+block content
+    .container
+        p.is-size-4.has-text-centered Client
+        h2.title.has-text-centered.is-2= title
+        
+        .box
+            h3.subtitle.is-3.is-marginless Info
+
+            .is-divider.is-marginless
+            br
+            .columns.is-fullhd
+                .column
+                    h4.subtitle.is-4.is-marginless 
+                        strong Name
+                    p.is-size-5=`${client.firstName} ${client.lastName}`
+                .column
+                    h4.subtitle.is-4.is-marginless  
+                        strong Email
+                    p.is-size-5
+                        a(href=`mailto:${client.email}`)=client.email
+
+                .column
+                    h4.subtitle.is-4.is-marginless  
+                        strong Phone
+                    p.is-size-5=client.homePhone
+                    p.is-size-5=client.mobilePhone
+
+                .column
+                    h4.subtitle.is-4.is-marginless  
+                        strong Address
+                    p.is-size-5.is-multi-line=client.address
+
+        .box
+            h3.subtitle.is-3.is-marginless Notes
+            .is-divider.is-marginless
+            br
+            p.notes-display.is-size-5.is-multi-line=client.notes
+
+        .box
+            .columns.is-marginless
+                .column.is-paddingless
+                    h3.subtitle.is-3 Systems
+                .column.is-paddingless
+                    p.subtitle.is-3.has-text-right 0
+            .is-divider.is-marginless
+            br
+            
+            p TABLE OF SYSTEMS
+
+        .columns
+            .column
+                .box
+                    .columns.is-marginless
+                        .column.is-paddingless
+                            h3.subtitle.is-3 Invoices
+                        .column.is-paddingless
+                            p.subtitle.is-3.has-text-right 0
+                    .is-divider.is-marginless
+                    br
+                    
+                    p TABLE OF INVOICES
+
+            .column
+                .box
+                    .columns.is-marginless
+                        .column.is-paddingless
+                            h3.subtitle.is-3 Receipts
+                        .column.is-paddingless
+                            p.subtitle.is-3.has-text-right 0
+                    .is-divider.is-marginless
+                    br
+                    
+                    p TABLE OF RECEIPTS
+
+        p.has-text-right
+            a.button.is-primary(href=`/clients/${client.slug}/edit`) Edit

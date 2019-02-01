@@ -1,6 +1,8 @@
 // Custom Variables
 
 // Bulma with flaty theme
+$box-background-color: #fafafa !important;
+$box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.2) !important;
 @import "~bulmaswatch/flatly/_variables.scss";
 @import "~bulma/bulma";
 @import "~bulmaswatch/flatly/_overrides.scss";
@@ -68,4 +70,13 @@ $flashes: 5;
     animation: flashClose 1s backwards;
     animation-fill-mode: forwards;
   }
+}
+
+.is-multi-line {
+  white-space: pre-wrap;
+}
+
+.notes-display {
+  max-height: 200px;
+  overflow: hidden scroll;
 }
