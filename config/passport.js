@@ -20,15 +20,12 @@ module.exports = async passport => {
       {
         clientID: process.env.GoogleClientID,
         clientSecret: process.env.GoogleClientSecret,
-        callbackURL: "/auth/google/callback"
+        callbackURL: "/auth/google/callback",
+        userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
       },
       async (accessToken, refreshToken, profile, done) => {
         // Ensure whitelisted user
-        if (
-          process.env.EmailWhitelist.split(",").indexOf(
-            profile.emails[0].value
-          ) <= 0
-        ) {
+        if (process.env.EmailWhitelist.split(",").indexOf(profile.emails[0].value) <= 0) {
           return done(null, false, "Your email is not on the whitelist");
         }
 
