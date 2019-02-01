@@ -42,11 +42,7 @@ const styles = {
   // here we pass the options as query params b/c it's short.
   // remember above we used an object for each loader instead of just a string?
   // We don't just pass an array of loaders, we run them through the extract plugin so they can be outputted to their own .css file
-  use: ExtractTextPlugin.extract([
-    "css-loader?sourceMap",
-    postcss,
-    "sass-loader?sourceMap"
-  ])
+  use: ExtractTextPlugin.extract(["css-loader?sourceMap", postcss, "sass-loader?sourceMap"])
 };
 
 // We can also use plugins - this one will compress the crap out of our JS
@@ -61,7 +57,8 @@ const config = {
     // we only have 1 entry, but I've set it up for multiple in the future
     Common: "./public/javascripts/common.js",
     SystemForm: "./public/javascripts/systemForm.js",
-    Login: "./public/javascripts/Login.js"
+    Login: "./public/javascripts/Login.js",
+    EditClient: "./public/javascripts/EditClient.js"
   },
   // we're using sourcemaps and here is where we specify which kind of sourcemap to use
   devtool: "source-map",

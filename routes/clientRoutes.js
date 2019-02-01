@@ -28,8 +28,7 @@ router.post("/new", catchErrors(clientController.createClient));
 // Update a Client
 router.post("/:id", catchErrors(clientController.updateClient));
 
-// DELETE
 // Delete a Client
-router.delete("/:id", catchErrors(clientController.deleteClient));
+router.post("/:id/delete", catchErrors(clientController.deleteClient));
 
 module.exports = router;

@@ -30,7 +30,7 @@ exports.renderClientList = async (req, res) => {
       params.push(`${key}=${req.query[key]}`);
     }
 
-    if (!params.length) return res.render("/clients");
+    if (params.length == 0) return res.render("/clients");
 
     return res.redirect(`/clients?${params.join("&")}`);
   }
@@ -100,10 +100,10 @@ exports.updateClient = async (req, res) => {
 };
 
 exports.deleteClient = async (req, res) => {
-  await Client.findOneAndDelete({
+  const client = await Client.findOneAndRemove({
     slug: req.params.id,
     author: req.user._id
-  });
+  }).exec();
 
   if (!client) return next({ error: "That client does not exist", redirect: "/clients" });
 
