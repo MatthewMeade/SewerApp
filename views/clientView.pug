@@ -2,8 +2,20 @@ extends layout
 
 block content
     .container
+
         p.is-size-4.has-text-centered Client
-        h2.title.has-text-centered.is-2= title
+        .columns
+            .column
+                a.button.is-light(href=`/clients/`) Back to list
+            
+            .column
+                h2.title.has-text-centered.is-2= title
+
+
+            .column
+                p.has-text-right.is-pulled-right
+                    a.button.is-primary(href=`/clients/${client.slug}/edit`) Edit
+
         
         .box
             h3.subtitle.is-3.is-marginless Info
@@ -74,5 +86,3 @@ block content
                     
                     p TABLE OF RECEIPTS
 
-        p.has-text-right
-            a.button.is-primary(href=`/clients/${client.slug}/edit`) Edit
