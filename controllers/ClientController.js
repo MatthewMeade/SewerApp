@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Client = mongoose.model("Client");
 
 exports.renderClientList = async (req, res) => {
-  const page = req.query.page || 1;
+  const page = parseInt(req.query.page || 1);
   const pageSize = 25;
   const skip = Math.max(page * pageSize - pageSize, 0);
 
@@ -11,17 +11,20 @@ exports.renderClientList = async (req, res) => {
 
   const search = req.query.search || "";
 
-  const clientsPromise = Client.find({ author: req.user._id, $text: { $search: search } })
+  const findObj = { author: req.user._id };
+  if (search) findObj.$text = { $search: search };
+
+  const clientsPromise = Client.find(findObj)
     .skip(skip)
     .limit(pageSize)
     .sort({ [orderBy]: sortOrder });
 
-  const countPromise = Client.count({ author: req.user._id, $text: { $search: search } });
+  const countPromise = Client.count(findObj);
 
   const [clients, count] = await Promise.all([clientsPromise, countPromise]);
 
   const pages = Math.ceil(count / pageSize);
-  if (!clients.length && skip) {
+  if ((!clients.length && skip) || page < 1) {
     req.flash("info", `Requested page ${page} doesn't exist. Redirected to page ${pages}`);
 
     req.query.page = pages;

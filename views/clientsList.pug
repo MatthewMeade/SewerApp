@@ -1,6 +1,65 @@
 extends layout
 
+mixin pageControl(page, pages)
+    if page > 1 && pages != 1
+        a(href=`/clients?${search && `search=${search}&`}page=${page-1}`) 
+            i.fas.fa-caret-left 
+    span=` Page ${page} of ${pages} `
+    if page < pages
+        a(href=`/clients?${search && `search=${search}&`}page=${page+1}`)
+            i.fas.fa-caret-right 
+
+
 block content
-    h2.subtitle Clients
-    code=JSON.stringify(clients, null, 2)
-    
+    .container
+
+        .columns
+            .column
+                .columns.is-marginless
+                    .column.is-paddingless
+                        h3.subtitle.is-3=`Clients: ${count}`
+                    if clients.length
+                        .column.is-paddingless
+                            p.subtitle.is-3.has-text-right
+                                +pageControl(page, pages)
+
+                .is-divider.is-marginless
+
+        form(action="/clients", method="get")
+
+            .columns
+                .column
+                    input.input(type="text" name="search" placeholder="Search..." value=search)
+                .column.is-1.has-text-right
+                    button.button.is-primary(type="submit") Search
+                if search
+                    .column.is-1.has-text-right
+                        a.button.is-primary(href="/clients") Clear
+
+        br
+
+        if clients.length
+            table.table.is-fullwidth.is-striped.is-hoverable
+                thead
+                    tr
+                        th First Name
+                        th Last Name
+                        th Email
+                        th Home Phone
+                        th Address
+                tbody
+                    each client in clients
+                        tr
+                        - var cols = ["firstName", "lastName", "email", "homePhone", "address"];
+                        each col in cols
+                            td
+                                a(href=`/clients/${client.slug}`)
+                                    p.has-text-dark=client[col]
+                        
+            p.has-text-centered.is-size-3
+                +pageControl(page, pages)
+                    
+        else
+            br
+            p.is-size-2.has-text-centered.has-text-danger= (search ? "No clients match your search" : "You have not created any clients")
+
