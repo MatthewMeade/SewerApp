@@ -75,10 +75,12 @@ app.use((req, res, next) => {
 const pageRoutes = require("./routes/pages");
 const oauthRoutes = require("./routes/auth");
 const clientRoutes = require("./routes/clientRoutes");
+const systemRoutes = require("./routes/systemRoutes");
 
 app.use("/", pageRoutes);
 app.use("/auth", oauthRoutes);
 app.use("/clients", clientRoutes);
+app.use("/systems", systemRoutes);
 
 // If that above routes didnt work, we 404 them and forward to error handler
 app.use(errorHandlers.notFound);
