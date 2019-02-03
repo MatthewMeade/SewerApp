@@ -33,12 +33,10 @@ exports.renderClientList = async (req, res) => {
       params.push(`${key}=${req.query[key]}`);
     }
 
-    if (params.length == 0) return res.render("/clients");
-
     return res.redirect(`/clients?${params.join("&")}`);
   }
 
-  res.render("clientsList", { title: "Clients", clients, page, pages, count, orderBy, sortOrder, search });
+  res.render("clientViews/clientsList", { title: "Clients", clients, page, pages, count, orderBy, sortOrder, search });
 };
 
 exports.renderClientView = async (req, res, next) => {
@@ -49,13 +47,13 @@ exports.renderClientView = async (req, res, next) => {
 
   if (!client) return next({ error: "That client does not exist", redirect: "/clients" });
 
-  res.render("clientView", { title: ` ${client.firstName} ${client.lastName}`, client });
+  res.render("clientViews/clientView", { title: ` ${client.firstName} ${client.lastName}`, client });
 };
 
 exports.renderNewClientForm = (req, res) => {
   const client = req.session.body || {};
   req.session.body = null;
-  res.render("editClient", { title: "New Client", client, isNew: true });
+  res.render("clientViews/editClient", { title: "New Client", client, isNew: true });
 };
 
 exports.renderEditClientForm = async (req, res) => {
@@ -69,7 +67,7 @@ exports.renderEditClientForm = async (req, res) => {
 
   if (!client) return next({ error: "That client does not exist", redirect: "/clients" });
 
-  res.render("editClient", {
+  res.render("clientViews/editClient", {
     title: `${client.firstName} ${client.lastName}`,
     client,
     isNew: false
