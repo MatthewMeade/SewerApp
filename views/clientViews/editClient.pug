@@ -65,7 +65,7 @@ block content
                 .column
                     if !isNew
                         p.control.pulled-left
-                            a.button.is-danger.deleteBtn Delete
+                            a.button.is-danger.deleteBtn(data-record=client data-url=`/clients/${client.slug}/delete`) Delete
                 .column
                     .field.is-grouped.is-grouped-right
                         p.control
