@@ -6,7 +6,6 @@ router.get("/", ensureIsAuth, (req, res) => res.render("index.pug", { title: "Ho
 router.get("/home", (req, res) => res.render("index.pug", { title: "Home" }));
 
 router.get("/invoices", ensureIsAuth, (req, res) => res.render("invoices.pug", { title: "Invoices" }));
-router.get("/settings", ensureIsAuth, (req, res) => res.render("settings.pug", { title: "Settings" }));
 
 router.get("/login", ensureIsNotAuth, (req, res) => {
   res.render("login.pug", { title: "Login" });

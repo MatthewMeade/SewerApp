@@ -58,7 +58,8 @@ const config = {
     Common: "./public/javascripts/common.js",
     SystemForm: "./public/javascripts/systemForm.js",
     Login: "./public/javascripts/Login.js",
-    EditClient: "./public/javascripts/EditClient.js"
+    EditClient: "./public/javascripts/EditClient.js",
+    SettingsPage: "./public/javascripts/SettingsPage.js"
   },
   // we're using sourcemaps and here is where we specify which kind of sourcemap to use
   devtool: "source-map",
