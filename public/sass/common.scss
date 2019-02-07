@@ -80,3 +80,7 @@ $flashes: 5;
   max-height: 200px;
   overflow: hidden scroll;
 }
+
+td {
+  vertical-align: middle !important;
+}
