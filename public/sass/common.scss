@@ -81,6 +81,11 @@ $flashes: 5;
   overflow: hidden scroll;
 }
 
+.settingsTable {
+  max-height: 300px;
+  overflow: hidden auto;
+}
+
 td {
   vertical-align: middle !important;
 }
