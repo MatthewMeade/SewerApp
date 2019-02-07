@@ -55,6 +55,9 @@ block content
                                 each spec in specs
                                     tr
                                         td.is-size-4= spec.name
+                                        td.is-size-6
+                                            a(href=`/files/uploads/${spec.file}` target="_bank")
+                                                p=`${spec.file.slice(0,25)}${spec.file.length > 25 ? "..." : ""}`
                                         td
                                             p.has-text-right
                                                 a.button.is-danger.deleteBtn(data-record=spec data-url=`/settings/delete/spec/${spec.id}`) Delete
@@ -64,7 +67,14 @@ block content
                     form(action=`/settings/add/spec`, method="post" enctype="multipart/form-data")
                         .field.is-grouped
                             .control.is-expanded
-                                input.input(type="file" name="file" placeholder="New...")
+                                .file.has-name
+                                    label.file-label
+                                        input.file-input(type="file" name="file" placeholder="New..." required="required")
+                                        span.file-cta
+                                            span.file.icon
+                                                i.fas.fa-upload
+                                            span.file-label
+                                        span.file-name Choose a file
                             .control.is-expanded
                                 input.input(type="text" name="name" placeholder="Name...")
                             .control
@@ -105,3 +115,4 @@ block content
 
 
     script(src="/dist/SettingsPage.bundle.js")
+

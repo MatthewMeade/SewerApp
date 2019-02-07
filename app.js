@@ -77,12 +77,14 @@ const oauthRoutes = require("./routes/auth");
 const clientRoutes = require("./routes/clientRoutes");
 const systemRoutes = require("./routes/systemRoutes");
 const settingsRoutes = require("./routes/settingsRoutes");
+const fileRoutes = require("./routes/fileRoutes");
 
 app.use("/", pageRoutes);
 app.use("/auth", oauthRoutes);
 app.use("/clients", clientRoutes);
 app.use("/systems", systemRoutes);
 app.use("/settings", settingsRoutes);
+app.use("/files", fileRoutes);
 
 // If that above routes didnt work, we 404 them and forward to error handler
 app.use(errorHandlers.notFound);
