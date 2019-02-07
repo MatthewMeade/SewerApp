@@ -89,3 +89,13 @@ $flashes: 5;
 td {
   vertical-align: middle !important;
 }
+
+// Sticky nav
+html {
+  overflow: hidden;
+}
+
+#appBody {
+  height: calc(100vh - 60px);
+  overflow: hidden auto;
+}
