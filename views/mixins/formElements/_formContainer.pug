@@ -1,0 +1,25 @@
+include ../_deleteConfirm
+
+mixin formContainer(name, item)
+    .container
+        p.is-size-4.has-text-centered=`${isNew ? "" : `Edit ${name}`}`
+        h2.title.has-text-centered.is-2=`${isNew ? `New ${name}` : title}`
+        form(action=`/${name}s/${item.slug || "new"}`, method="post").box
+            block 
+
+    
+            .columns
+                .column
+                    if !isNew
+                        p.control.pulled-left
+                            a.button.is-danger.deleteBtn(data-record=client data-url=`/${name}s/${item.slug}/delete`) Delete
+                .column
+                    .field.is-grouped.is-grouped-right
+                        p.control
+                            button.button.is-primary(type="submit") Submit
+                        p.control
+                            a.button.is-light(href=`/${name}/${item.slug || ""}`) Cancel
+
+    +deleteConfirm("Client", item)
+
+    

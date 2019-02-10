@@ -1,0 +1,20 @@
+mixin fieldLabel(label)
+    .field
+        label.label.subtitle.is-4.is-marginless= label
+            .control
+                block
+
+mixin fieldGroup()
+    .field
+        .field-body
+            block
+        br
+
+mixin input(label, type, name, placeholder, value, required)
+    +fieldLabel(label)
+        input.input(type=type, name=name placeholder=placeholder value=value required=required)
+
+
+mixin textArea(label, name, placeholder, value, required)
+    +fieldLabel(label)
+        textarea.textarea(name=name placeholder=placeholder rows=3)=value
