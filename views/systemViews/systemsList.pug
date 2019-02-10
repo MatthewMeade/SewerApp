@@ -1,4 +1,6 @@
-extends ../layout 
+extends ../layout
+include ../mixins/_listTable
 
 block content
-    p System List
+    .container
+        +listTable("Systems", systems, ["client"])
