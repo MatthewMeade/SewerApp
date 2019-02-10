@@ -22,7 +22,7 @@ html(lang="en")
                 .navbar-menu#navMenu
                     .navbar-start
                         each item in h.menu
-                            a(href=item.path class=(currentPath.startsWith(item.path) ? "is-active" : "")).navbar-item.is-tab= item.title
+                            a(href=item.path class=(currentPath.toLowerCase().indexOf(item.path) >= 0 ? "is-active" : "")).navbar-item.is-tab= item.title
 
                     .navbar-end
                         .navbar-item
