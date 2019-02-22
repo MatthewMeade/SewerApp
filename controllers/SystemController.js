@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 const System = mongoose.model("System");
 
+const Clients = mongoose.model("Client");
+const Contractor = mongoose.model("Contractor");
+const Inspector = mongoose.model("Inspector");
+const Spec = mongoose.model("Spec");
+
 // Lot's of duplicated code from System Controller
 // TODO: Refactor
 
@@ -45,7 +50,7 @@ exports.renderSystemList = async (req, res) => {
 exports.renderSystemView = async (req, res, next) => {
   const system = await System.findOne({
     slug: req.params.id,
-    author: req.user._id
+    author: req.user._id,
   });
 
   if (!system) return next({ error: "That system does not exist", redirect: "/systems" });
@@ -56,7 +61,24 @@ exports.renderSystemView = async (req, res, next) => {
 exports.renderNewSystemForm = async (req, res) => {
   const system = req.session.body || {};
   req.session.body = null;
-  res.render("systemViews/editSystem", { title: "New System", system, isNew: true });
+
+  const author = req.user.id;
+  const [clients, contractors, inspectors, specs] = await Promise.all([
+    Clients.find({ author }),
+    Contractor.find({ author }),
+    Inspector.find({ author }),
+    Spec.find({ author }),
+  ]);
+
+  res.render("systemViews/editSystem", {
+    title: "New System",
+    system,
+    isNew: true,
+    clients,
+    contractors,
+    inspectors,
+    specs,
+  });
 };
 
 exports.renderEditSystemForm = async (req, res) => {
@@ -64,7 +86,7 @@ exports.renderEditSystemForm = async (req, res) => {
     req.session.body ||
     (await System.findOne({
       slug: req.params.id,
-      author: req.user._id
+      author: req.user._id,
     }));
   req.session.body = null;
 
@@ -73,7 +95,7 @@ exports.renderEditSystemForm = async (req, res) => {
   res.render("systemViews/editSystem", {
     title: `${system.firstName} ${system.lastName}`,
     system,
-    isNew: false
+    isNew: false,
   });
 };
 
@@ -88,12 +110,12 @@ exports.updateSystem = async (req, res) => {
   const system = await System.findOneAndUpdate(
     {
       slug: req.params.id,
-      author: req.user._id
+      author: req.user._id,
     },
     req.body,
     {
       new: true,
-      runValidators: true
+      runValidators: true,
     }
   ).exec();
 
@@ -106,7 +128,7 @@ exports.updateSystem = async (req, res) => {
 exports.deleteSystem = async (req, res) => {
   const system = await System.findOneAndRemove({
     slug: req.params.id,
-    author: req.user._id
+    author: req.user._id,
   }).exec();
 
   if (!system) return next({ error: "That system does not exist", redirect: "/systems" });
