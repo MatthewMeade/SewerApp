@@ -65,3 +65,26 @@ mixin fileAttachments(label, name, files)
                     td
                         p.has-text-right
                             a.button.is-success.attachmentAddBtn Add
+
+//- TODO: Dynamic number of layers using JS
+mixin soilLayerTable(layers)
+    - layers = layers || [{}]
+    +fieldLabel("Soil Layers")
+    table.table.is-fullwidth
+        thead
+            tr
+                th Depth
+                th Soil Description
+                th Groundwater / Bedrock Observations
+        tbody
+            each i in [0, 1, 2, 3, 4]
+                - layers[i] = layers[i] || {}
+                tr 
+                    td
+                        input.input(type="text", name=`soilLayers[${i}].depth` placeholder="0.0 - 0.0" value=layers[i].depth)
+                    td
+                        input.input(type="text", name=`soilLayers[${i}].description` placeholder="Soil Description" value=layers[i].description)
+                    td
+                        input.input(type="text", name=`soilLayers[${i}].observations` placeholder="Groundwater / Bedrock Observations" value=layers[i].observations)
+
+        

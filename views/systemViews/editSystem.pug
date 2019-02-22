@@ -55,7 +55,7 @@ block content
                     +input("Water Source", "text", "water", "Water Source", system.water)
 
 
-            h3.subtitle.is-3.is-marginless#Photos Attachments
+            h3.subtitle.is-3.is-marginless#Attachments Attachments
             .is-divider.is-marginless
             br  
 
@@ -68,6 +68,23 @@ block content
 
                 .column
                     +fileAttachments("Floor Plans", "floorPlans", system.floorPlans)
+
+            
+            h3.subtitle.is-3.is-marginless#TestPits Test Pit
+            .is-divider.is-marginless
+            br  
+
+            +fieldGroup()
+                +input("Test Pit Date", "date", "testPitDate", "", system.testPitDate)
+                +input("Pit Depth", "number", "pitDepth", "0.00", system.pitDepth)
+
+            //- Soil Layers
+            +soilLayerTable(system.soilLayers)
+            br
+
+            +fieldGroup()
+                +textArea("Test Pit Conclusion", "pitConclusion", "Conslusion...", system.pitConclusion)
+            
 
 
 
