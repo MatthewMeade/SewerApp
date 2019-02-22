@@ -99,3 +99,8 @@ html {
   height: calc(100vh - 60px);
   overflow: hidden auto;
 }
+
+code {
+  white-space: pre-wrap;
+  display: block;
+}
