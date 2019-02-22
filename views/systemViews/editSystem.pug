@@ -5,5 +5,23 @@ include ../mixins/formElements/_fields
 
 block content
     +formContainer("System", system)
+            h3.subtitle.is-3.is-marginless People
+            .is-divider.is-marginless
+            br
 
-    code=h.dump(system)
+            +fieldGroup()
+                - const clientOptions = clients.map(client => ({value: client._id, text: `${client.firstName} ${client.lastName} [${client.email}]`}))
+                +searchSelect("Client", "client", clientOptions, system.client, true)
+
+            +fieldGroup()
+                - const inspectorOptions = inspectors.map(inspector => ({value: inspector._id, text: `${inspector.name}`}))
+                +searchSelect("Inspector", "inspector", inspectorOptions, system.inspector, true)
+
+            +fieldGroup()
+                - const contractorOptions = contractors.map(contractor => ({value: contractor._id, text: `${contractor.name}`}))
+                +searchSelect("Contractor", "contractor", contractorOptions, system.contractor, true)
+
+
+
+    code=JSON.stringify({system, clients, contractors, inspectors, specs}, null, 2)
+    script(src="/dist/SystemForm.bundle.js")
