@@ -18,3 +18,18 @@ mixin input(label, type, name, placeholder, value, required)
 mixin textArea(label, name, placeholder, value, required)
     +fieldLabel(label)
         textarea.textarea(name=name placeholder=placeholder rows=3)=value
+
+
+mixin searchSelect(label, name, options, value, required)
+
+    .column.is-4
+        +input(label, text, `${name}Search`, `Filter ${name}s`)
+
+    .column
+        +fieldLabel("Select")
+            .select.is-fullwidth
+                select(name="test" data-filterInput=`${name}Search`).searchable
+                    option(value="")=`Select ${label}`
+                    each option in options
+                        option(value=option.value)=option.text
+
