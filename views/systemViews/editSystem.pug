@@ -1,4 +1,9 @@
-extends ../layout 
+extends ../layout
+
+include ../mixins/formElements/_formContainer
+include ../mixins/formElements/_fields
 
 block content
-    p System Edit
+    +formContainer("System", system)
+
+    code=h.dump(system)
