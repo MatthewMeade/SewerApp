@@ -7,8 +7,5 @@ import { $$ } from "./modules/Bling";
 
 BulmaCommon();
 
-// TODO: Refactor
-$$(".file-input").on("change", e => {
-  const input = e.target;
-  input.parentNode.querySelector(".file-name").innerHTML = input.files[0].name;
-});
+import attachFileLabels from "./modules/FileUploadLabels";
+attachFileLabels();

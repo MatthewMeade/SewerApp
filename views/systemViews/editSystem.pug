@@ -23,5 +23,54 @@ block content
 
 
 
+            h3.subtitle.is-3.is-marginless Cover letters
+            .is-divider.is-marginless
+            br
+
+            +fieldGroup()
+                +textArea("Inspector Letter", "inspectorLetterBody", "Inspector Letter...", system.inspectorLetterBody)
+                +textArea("Client Letter", "clientLetterBody", "Client  Letter...", system.clientLetterBody)
+
+
+            h3.subtitle.is-3.is-marginless Site Location
+            .is-divider.is-marginless
+            br  
+
+            +fieldGroup()
+                .column.is-paddingless
+                    +fieldGroup()
+                        - const coords = system.location ? system.location.coordinates : []
+                        +input("Lat", "number", "location.coordinates[0]", "0.00", coords[0])
+                        +input("Lng", "number", "location.coordinates[0]", "0.00", coords[1])
+
+                    +input("Municipality", "text", "municipality", "Municipality", system.municipality)
+
+                    br
+                    +textArea("Address", "location.address", "Address...", system.location ? system.location.address : "")
+                    br
+
+                    +fieldGroup()
+                        +input("Width", "number", "width", "0.00", system.width)
+                        +input("Length", "number", "length", "0.00", system.length)
+                    +input("Water Source", "text", "water", "Water Source", system.water)
+
+
+            h3.subtitle.is-3.is-marginless#Photos Attachments
+            .is-divider.is-marginless
+            br  
+
+            .columns
+                .column
+                    +fileAttachments("Site Photos", "sitePhotos", system.sitePhotos)
+
+                .column
+                    +fileAttachments("Map Photos", "mapPhotos", system.mapPhotos)
+
+                .column
+                    +fileAttachments("Floor Plans", "floorPlans", system.floorPlans)
+
+
+
+
     code=JSON.stringify({system, clients, contractors, inspectors, specs}, null, 2)
     script(src="/dist/SystemForm.bundle.js")

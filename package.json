@@ -19,6 +19,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.3.3",
     "axios": "^0.15.3",
     "body-parser": "^1.17.1",
     "bulma": "^0.7.2",

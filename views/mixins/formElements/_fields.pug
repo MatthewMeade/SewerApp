@@ -1,6 +1,6 @@
 mixin fieldLabel(label)
     .field
-        label.label.subtitle.is-4.is-marginless= label
+        label.label.subtitle.is-4.is-marginless(style=`${label ? "" : "color: rgba(0,0,0,0)"}`)= label || "_"
             .control
                 block
 
@@ -22,14 +22,46 @@ mixin textArea(label, name, placeholder, value, required)
 
 mixin searchSelect(label, name, options, value, required)
 
-    .column.is-4
+    .column.is-4.is-paddingless
         +input(label, text, `${name}Search`, `Filter ${name}s`)
 
-    .column
-        +fieldLabel("Select")
+    .column.is-paddingless
+        +fieldLabel()
             .select.is-fullwidth
                 select(name="test" data-filterInput=`${name}Search`).searchable
                     option(value="")=`Select ${label}`
                     each option in options
                         option(value=option.value)=option.text
 
+mixin fileAttachments(label, name, files)
+    table.table.is-striped.is-fullwidth.fileAttachTable(data-files=files data-name=name)
+        thead
+            tr
+                th(colspan=2)= label
+        tbody
+            //- each file in files
+            //-     tr
+            //-         td 
+            //-             a(href=`/files/uploads/${file.name}` target="_bank")
+            //-                 p=`${file.name.slice(0,25)}${file.name.length > 25 ? "..." : ""}`
+
+            //-         td
+            //-             p.has-text-right
+            //-                 a.button.is-danger.attachmentDeleteBtn Delete
+        tfoot
+            tr
+                td
+                    .file.has-name.is-fullwidth
+                        label.file-label
+                            input.file-input.attachmentAddInput(type="file" name=`${name}UploadField`)
+                            .file-cta
+                                .file-icon
+                                    i.fas.fa-upload
+                                .file-label Choose a file
+                            .file-name
+
+                        
+                                
+                    td
+                        p.has-text-right
+                            a.button.is-success.attachmentAddBtn Add

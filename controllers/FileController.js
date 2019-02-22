@@ -12,11 +12,10 @@ const storage = multer.diskStorage({
     cb(null, dir);
   },
   filename: (req, file, cb) => {
-    const extension = file.mimetype.split("/")[1];
-    const fileName = `${file.originalname.split(".")[0]}_${Date.now()}.${extension}`;
+    const fileName = `${file.originalname}`;
     req.body.file = fileName;
     cb(null, fileName);
-  }
+  },
 });
 
 // TODO: Put restrictions on files
