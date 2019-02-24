@@ -4,7 +4,7 @@ mixin formContainer(name, item)
     .container
         p.is-size-4.has-text-centered=`${isNew ? "" : `Edit ${name}`}`
         h2.title.has-text-centered.is-2=`${isNew ? `New ${name}` : title}`
-        form(action=`/${name}s/${item.slug || "new"}`, method="post").box
+        form(action=`/${name}s/${item.slug || "new"}`, method="post" enctype="multipart/form-data").box
             block 
 
     

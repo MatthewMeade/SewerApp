@@ -100,6 +100,7 @@ exports.renderEditSystemForm = async (req, res) => {
 };
 
 exports.createSystem = async (req, res) => {
+  console.log(req.files);
   req.body.author = req.user._id;
   const system = await new System(req.body).save();
   req.flash("success", `Successfully created System ${system.id}}`);

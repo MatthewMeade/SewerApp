@@ -162,7 +162,6 @@ systemSchema.virtual("contractorName").get(function() {
 });
 
 systemSchema.virtual("createdDate").get(function() {
-  console.log("RUNNING VIRTUAL");
   return moment(this.created).format("DD MMM YYYY");
 });
 

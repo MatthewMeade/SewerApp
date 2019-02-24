@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const systemController = require("../controllers/SystemController");
+const UploadController = require("../controllers/FileController");
 
 const { ensureIsAuth } = require("../handlers/auth");
 const { catchErrors } = require("../handlers/errorHandlers");
@@ -23,10 +24,10 @@ router.get("/:id/edit", catchErrors(systemController.renderEditSystemForm));
 
 // POST
 // Create a new system
-router.post("/new", catchErrors(systemController.createSystem));
+router.post("/new", UploadController.upload, catchErrors(systemController.createSystem));
 
 // Update a system
-router.post("/:id", catchErrors(systemController.updateSystem));
+router.post("/:id", UploadController.upload, catchErrors(systemController.updateSystem));
 
 // Delete a system
 router.post("/:id/delete", catchErrors(systemController.deleteSystem));
