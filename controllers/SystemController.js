@@ -49,13 +49,13 @@ exports.renderSystemList = async (req, res) => {
 
 exports.renderSystemView = async (req, res, next) => {
   const system = await System.findOne({
-    slug: req.params.id,
+    _id: req.params.id,
     author: req.user._id,
   });
 
   if (!system) return next({ error: "That system does not exist", redirect: "/systems" });
 
-  res.render("systemViews/systemView", { title: ` ${system.firstName} ${system.lastName}`, system });
+  res.render("systemViews/systemView", { title: ` ${system.id}`, system });
 };
 
 exports.renderNewSystemForm = async (req, res) => {
@@ -102,8 +102,8 @@ exports.renderEditSystemForm = async (req, res) => {
 exports.createSystem = async (req, res) => {
   req.body.author = req.user._id;
   const system = await new System(req.body).save();
-  req.flash("success", `Successfully created ${system.firstName} ${system.lastName}`);
-  res.redirect(`/systems/${system.slug}`);
+  req.flash("success", `Successfully created System ${system.id}}`);
+  res.redirect(`/systems/${system.id}`);
 };
 
 exports.updateSystem = async (req, res) => {
@@ -122,7 +122,7 @@ exports.updateSystem = async (req, res) => {
   if (!system) return next({ error: "That system does not exist", redirect: "/systems" });
 
   req.flash("success", `Successfully edited ${system.firstName} ${system.lastName}`);
-  res.redirect(`/systems/${system.slug}`);
+  res.redirect(`/systems/${system.id}`);
 };
 
 exports.deleteSystem = async (req, res) => {

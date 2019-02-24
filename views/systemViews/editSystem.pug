@@ -40,8 +40,8 @@ block content
                 .column.is-paddingless
                     +fieldGroup()
                         - const coords = system.location ? system.location.coordinates : []
-                        +input("Lat", "number", "location.coordinates[0]", "0.00", coords[0])
-                        +input("Lng", "number", "location.coordinates[0]", "0.00", coords[1])
+                        +input("Lat", "text", "location.coordinates[0]", "0.00", coords[0] || 0.00)
+                        +input("Lng", "text", "location.coordinates[1]", "0.00", coords[1] || 0.00)
 
                     +input("Municipality", "text", "municipality", "Municipality", system.municipality)
 

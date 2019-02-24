@@ -3,4 +3,5 @@ include ../mixins/_listTable
 
 block content
     .container
-        +listTable("Systems", systems, ["client"])
+        +listTable("Systems", systems, ["clientName", "createdDate"])
+        code= h.dump(systems)

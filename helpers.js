@@ -28,8 +28,10 @@ exports.menu = [
   { path: "/systems", title: "Systems" },
   { path: "/clients", title: "Clients" },
   { path: "/invoices", title: "Invoices" },
-  { path: "/settings", title: "Settings" }
+  { path: "/settings", title: "Settings" },
 ];
+
+exports.moment = require("moment");
 
 exports.camelCaseToTitle = str => {
   var result = str.replace(/([A-Z])/g, " $1");

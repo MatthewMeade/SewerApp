@@ -48,7 +48,7 @@ mixin listTable(name, items, cols)
                     tr
                     each col in cols
                         td
-                            a(href=`/${name}/${item.slug}`)
+                            a(href=`/${name}/${item.slug || item._id}`)
                                 p.has-text-dark=item[col]
                     
         p.has-text-centered.is-size-3
