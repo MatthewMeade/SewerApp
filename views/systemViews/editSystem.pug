@@ -84,9 +84,49 @@ block content
 
             +fieldGroup()
                 +textArea("Test Pit Conclusion", "pitConclusion", "Conslusion...", system.pitConclusion)
+
+
+
+            h3.subtitle.is-3.is-marginless#Perc Perc Tests
+            .is-divider.is-marginless
+            br 
+
+            +fieldGroup()
+                +input("Perc Test Date", "date", "percTestDate", "", system.percTestDate)
+
+            .columns
+                .column
+                    h4.subtitle.is-4 On Site
+                    +fieldGroup()
+                        - const rates = system.onSitePercRates || [0,0,0]
+                        +input("Rate 1", "number", "onsitePercRates[0]", "0", rates[0])
+                        +input("Rate 2", "number", "onsitePercRates[1]", "0", rates[1])
+                        +input("Rate 3", "number", "onsitePercRates[2]", "0", rates[2])
+
+                    h4.subtitle.is-4 Off Site
+                    +fieldGroup()
+                        - const rates = system.offSitePercRates || [0,0,0]
+                        +input("Rate 1", "number", "offsitePercRates[0]", "0", rates[0])
+                        +input("Rate 2", "number", "offsitePercRates[1]", "0", rates[1])
+                        +input("Rate 3", "number", "offsitePercRates[2]", "0", rates[2])
+                .column
+                    h4.subtitle.is-4 Test Pit Attachments
+                    +fileAttachments("Pit Drawings", "pitDrawings", system.pitDrawings)
+
+
+
+
+
+            h3.subtitle.is-3.is-marginless#Building Building Info
+            .is-divider.is-marginless
+            br  
+
+
+            +fieldGroup()
+                +input("# of Bedrooms", "number", "numBedrooms", "2", system.numBedrooms)
+                +input("Square Footage", "number", "squareFootage", "0", system.numBedrooms)
+
             
-
-
 
 
     code=JSON.stringify({system, clients, contractors, inspectors, specs}, null, 2)

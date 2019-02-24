@@ -75,12 +75,8 @@ const systemSchema = new mongoose.Schema(
         rate: Number,
       },
     ],
-    offSitePercRates: [
-      {
-        rate: Number,
-      },
-    ],
-    pitDrawing: String,
+    offSitePercRates: [Number],
+    pitDrawings: [String],
 
     // Building Info
     numBedrooms: Number,
