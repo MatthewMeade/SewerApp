@@ -104,3 +104,11 @@ code {
   white-space: pre-wrap;
   display: block;
 }
+
+input[type="checkbox"] + span {
+  user-select: none;
+}
+
+input[type="checkbox"]:not(:checked) + span {
+  color: $grey-light;
+}

@@ -89,4 +89,46 @@ mixin soilLayerTable(layers)
 
         
 mixin fixtureUnits(units)
-    p FUs
+    - units = units || {}
+
+    - 
+        const table = {
+            basins: {label: "Basins", value: 1} ,
+            bathTubs: {label: "Bath Tubs", value: 1.5} ,
+            bathroomGroups: {label: "Bathroom Groups", value: 6} ,
+            bidet: {label: "Bidets", value: 1} ,
+            floorDrain4in: {label: "Floor Drains 4in", value: 3} ,
+            floorDrain3in: {label: "Floor Drains 3in", value: 3} ,
+            floorDrain2in: {label: "Floor Drains 2in", value: 2} ,
+            kitchenSink: {label: "Kitchen Sink", value: 1.5} ,
+            laundryStandPipe: {label: "Laundry Stand Pipe", value: 1.5} ,
+            laundryTray: {label: "Laundry Tray", value: 1.5} ,
+            showerHeadSingle: {label: "Shower Head Single", value: 1.5} ,
+            showerHeadMany: {label: "Shower Head Many", value: 3} ,
+            waterCloset: {label: "Water Closet", value: 4} ,
+        };
+
+
+    table.table.is-fullwidth
+        thead 
+            tr
+                th Fixture Unit
+                th Value
+                th Number
+        tbody
+            each value, name in table
+                tr
+                    td= value.label
+                    td= value.value
+                    td                         
+                        input.input(type="number", name=`fixtureUnits['${name}']`  min=0 value=units[name] || 0)
+
+
+mixin specSelect(specs, options)
+
+    .columns.is-multiline
+        each option in options
+            .column.is-one-quarter
+                label.checkbox.is-size-5
+                    input(type="checkbox" name="specs[]" value=option._id)
+                    div= ` ${option.name}`

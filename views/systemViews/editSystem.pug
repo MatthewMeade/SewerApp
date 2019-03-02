@@ -121,13 +121,27 @@ block content
             .is-divider.is-marginless
             br  
 
+            .columns
+                .column
 
-            +fieldGroup()
-                +input("# of Bedrooms", "number", "numBedrooms", "2", system.numBedrooms)
-                +input("Square Footage", "number", "squareFootage", "0", system.numBedrooms)
+                        +input("# of Bedrooms", "number", "numBedrooms", "", system.numBedrooms || 0)
+                        +input("Square Footage", "number", "squareFootage", "", system.numBedrooms || 0)
+                        +input("Outlets", "number", "outlets", "", system.outlets || 0)
+                        +input("Trench Depth", "number", "trenchDepth", "", system.trenchDepth || 0)
+                        +input("Imported Fill", "number", "importedFill", "", system.importedFill || 0)
+                        br
+                        +fileAttachments("Site Plans", "sitePlans", system.sitePlans)
+            
+                .column
+                    +fixtureUnits(system.fixtureUnits)
+
+
+            h3.subtitle.is-3.is-marginless#specs Specs
+            .is-divider.is-marginless
+            br  
+
+            +specSelect(system.specs, specs)
 
             
-
-
-    code=JSON.stringify({system, clients, contractors, inspectors, specs}, null, 2)
+    //- code=JSON.stringify({system, clients, contractors, inspectors, specs}, null, 2)
     script(src="/dist/SystemForm.bundle.js")
