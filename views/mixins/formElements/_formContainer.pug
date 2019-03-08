@@ -18,7 +18,7 @@ mixin formContainer(name, item)
                         p.control
                             button.button.is-primary(type="submit") Submit
                         p.control
-                            a.button.is-light(href=`/${name}/${item.slug || ""}`) Cancel
+                            a.button.is-light(href=`/${name}s/${item.slug || item._id || ""}`) Cancel
 
     +deleteConfirm("Client", item)
 
