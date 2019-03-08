@@ -31,7 +31,9 @@ mixin searchSelect(label, name, options, value, required)
                 select(name=name data-filterInput=`${name}Search` required=required).searchable
                     option(value="")=`Select ${label}`
                     each option in options
-                        option(value=option.value)=option.text
+                        - const selected = option.value.toString() == value.toString()
+                        option(value=option.value selected=selected)= option.text
+
 
 mixin fileAttachments(label, name, files)
     table.table.is-striped.is-fullwidth.fileAttachTable(data-files=files data-name=name)
@@ -81,11 +83,11 @@ mixin soilLayerTable(layers)
                 - layers[i] = layers[i] || {}
                 tr 
                     td
-                        input.input(type="text", name=`soilLayers[${i}].depth` placeholder="0.0 - 0.0" value=layers[i].depth)
+                        input.input(type="text", name=`soilLayers[${i}][depth]` placeholder="0.0 - 0.0" value=layers[i].depth)
                     td
-                        input.input(type="text", name=`soilLayers[${i}].description` placeholder="Soil Description" value=layers[i].description)
+                        input.input(type="text", name=`soilLayers[${i}][description]` placeholder="Soil Description" value=layers[i].description)
                     td
-                        input.input(type="text", name=`soilLayers[${i}].observations` placeholder="Groundwater / Bedrock Observations" value=layers[i].observations)
+                        input.input(type="text", name=`soilLayers[${i}][observations]` placeholder="Groundwater / Bedrock Observations" value=layers[i].observations)
 
         
 mixin fixtureUnits(units)
@@ -121,7 +123,7 @@ mixin fixtureUnits(units)
                     td= value.label
                     td= value.value
                     td                         
-                        input.input(type="number", name=`fixtureUnits['${name}']`  min=0 value=units[name] || 0)
+                        input.input(type="number", name=`fixtureUnits[${name}]`  min=0 value=units[name] || 0)
 
 
 mixin specSelect(specs, options)
@@ -130,5 +132,7 @@ mixin specSelect(specs, options)
         each option in options
             .column.is-one-quarter
                 label.checkbox.is-size-5
-                    input(type="checkbox" name="specs[]" value=option._id)
+                    - const checked = specs.indexOf(option._id) >= 0
+
+                    input(type="checkbox" name="specs[]" value=option._id checked=checked)
                     div= ` ${option.name}`

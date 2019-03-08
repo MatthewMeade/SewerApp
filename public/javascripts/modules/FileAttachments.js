@@ -5,7 +5,8 @@ import attachFileLabels from "./FileUploadLabels";
 class AttachmentTable {
   constructor(table) {
     this.table = table;
-    this.files = JSON.parse(table.dataset.files || "[]").map(f => f.name);
+    this.files = JSON.parse(table.dataset.files || "[]");
+    console.log(this.files);
 
     this.addBtn = table.querySelector(".attachmentAddBtn");
 

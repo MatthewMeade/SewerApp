@@ -70,11 +70,7 @@ const systemSchema = new mongoose.Schema(
     // Perc Tests
     percTestLocation: String,
     percTestDate: Date,
-    onSitePercRates: [
-      {
-        rate: Number,
-      },
-    ],
+    onSitePercRates: [Number],
     offSitePercRates: [Number],
     pitDrawings: [String],
 

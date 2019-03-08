@@ -40,13 +40,13 @@ block content
                 .column.is-paddingless
                     +fieldGroup()
                         - const coords = system.location ? system.location.coordinates : []
-                        +input("Lat", "text", "location.coordinates[0]", "0.00", coords[0] || 0.00)
-                        +input("Lng", "text", "location.coordinates[1]", "0.00", coords[1] || 0.00)
+                        +input("Lat", "text", "location[coordinates][0]", "0.00", coords[0] || 0.00)
+                        +input("Lng", "text", "location[coordinates][1]", "0.00", coords[1] || 0.00)
 
                     +input("Municipality", "text", "municipality", "Municipality", system.municipality)
 
                     br
-                    +textArea("Address", "location.address", "Address...", system.location ? system.location.address : "")
+                    +textArea("Address", "location[address]", "Address...", system.location ? system.location.address : "")
                     br
 
                     +fieldGroup()
@@ -75,8 +75,10 @@ block content
             br  
 
             +fieldGroup()
-                +input("Test Pit Date", "date", "testPitDate", "", system.testPitDate)
+                - const date = system.testPitDate && system.testPitDate.toISOString().split("T")[0]
+                +input("Test Pit Date", "date", "testPitDate", "", date)
                 +input("Pit Depth", "number", "pitDepth", "0.00", system.pitDepth)
+                
 
             //- Soil Layers
             +soilLayerTable(system.soilLayers)
@@ -92,23 +94,25 @@ block content
             br 
 
             +fieldGroup()
-                +input("Perc Test Date", "date", "percTestDate", "", system.percTestDate)
+                - const date = system.percTestDate && system.percTestDate.toISOString().split("T")[0]
+
+                +input("Perc Test Date", "date", "percTestDate", "", date)
 
             .columns
                 .column
                     h4.subtitle.is-4 On Site
                     +fieldGroup()
                         - const rates = system.onSitePercRates || [0,0,0]
-                        +input("Rate 1", "number", "onsitePercRates[0]", "0", rates[0])
-                        +input("Rate 2", "number", "onsitePercRates[1]", "0", rates[1])
-                        +input("Rate 3", "number", "onsitePercRates[2]", "0", rates[2])
+                        +input("Rate 1", "number", "onSitePercRates[0]", "0", rates[0])
+                        +input("Rate 2", "number", "onSitePercRates[1]", "0", rates[1])
+                        +input("Rate 3", "number", "onSitePercRates[2]", "0", rates[2])
 
                     h4.subtitle.is-4 Off Site
                     +fieldGroup()
                         - const rates = system.offSitePercRates || [0,0,0]
-                        +input("Rate 1", "number", "offsitePercRates[0]", "0", rates[0])
-                        +input("Rate 2", "number", "offsitePercRates[1]", "0", rates[1])
-                        +input("Rate 3", "number", "offsitePercRates[2]", "0", rates[2])
+                        +input("Rate 1", "number", "offSitePercRates[0]", "0", rates[0])
+                        +input("Rate 2", "number", "offSitePercRates[1]", "0", rates[1])
+                        +input("Rate 3", "number", "offSitePercRates[2]", "0", rates[2])
                 .column
                     h4.subtitle.is-4 Test Pit Attachments
                     +fileAttachments("Pit Drawings", "pitDrawings", system.pitDrawings)
@@ -125,7 +129,7 @@ block content
                 .column
 
                         +input("# of Bedrooms", "number", "numBedrooms", "", system.numBedrooms || 0)
-                        +input("Square Footage", "number", "squareFootage", "", system.numBedrooms || 0)
+                        +input("Square Footage", "number", "squareFootage", "", system.squareFootage || 0)
                         +input("Outlets", "number", "outlets", "", system.outlets || 0)
                         +input("Trench Depth", "number", "trenchDepth", "", system.trenchDepth || 0)
                         +input("Imported Fill", "number", "importedFill", "", system.importedFill || 0)
@@ -143,5 +147,5 @@ block content
             +specSelect(system.specs, specs)
 
             
-    //- code=JSON.stringify({system, clients, contractors, inspectors, specs}, null, 2)
+    //- code=JSON.stringify({system}, null, 2)
     script(src="/dist/SystemForm.bundle.js")

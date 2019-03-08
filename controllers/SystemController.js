@@ -55,7 +55,26 @@ exports.renderSystemView = async (req, res, next) => {
 
   if (!system) return next({ error: "That system does not exist", redirect: "/systems" });
 
-  res.render("systemViews/systemView", { title: ` ${system.id}`, system });
+  // res.render("systemViews/systemView", { title: ` ${system.id}`, system });
+
+  const author = req.user.id;
+
+  const [clients, contractors, inspectors, specs] = await Promise.all([
+    Clients.find({ author }),
+    Contractor.find({ author }),
+    Inspector.find({ author }),
+    Spec.find({ author }),
+  ]);
+
+  res.render("systemViews/editSystem", {
+    title: "Edit System",
+    system,
+    isNew: true,
+    clients,
+    contractors,
+    inspectors,
+    specs,
+  });
 };
 
 exports.renderNewSystemForm = async (req, res) => {
@@ -100,7 +119,7 @@ exports.renderEditSystemForm = async (req, res) => {
 };
 
 exports.createSystem = async (req, res) => {
-  console.log(req.files);
+  console.log(JSON.stringify(req.body, null, 2));
   req.body.author = req.user._id;
   const system = await new System(req.body).save();
   req.flash("success", `Successfully created System ${system.id}}`);
